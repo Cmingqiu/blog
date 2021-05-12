@@ -71,5 +71,12 @@ module.exports = {
         ]
       }
     ]
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@public': '/blog'
+      }
+    }
   }
 }

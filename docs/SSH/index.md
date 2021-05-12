@@ -30,8 +30,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 ::: tip
 注：其中/C:\Users\Administrator\.ssh/id_rsa 保存的为密钥，/C:\Users\Administrator\.ssh/id_rsa.pub 保存的为公钥
 :::
-![ssh](/img/ssh/1.png)
-![ssh](/img/ssh/2.png)
+![ssh](/blog/img/ssh/1.png)
+![ssh](/blog/img/ssh/2.png)
 
 ### 二、将 SSH 私钥添加到 ssh-agent
 
@@ -58,15 +58,15 @@ clip < /c/Users/thinkpad/.ssh/id_rsa.pub
 2. 进入 GitHub 的设置页面（登录 GitHub，在右上角）-> Settings -> SSH and GPG keys
 3. 点击 New SSH key 按钮
 4. 在 Title 输入框内，为你的新 key 取个名字，在 Key 输入框内，粘贴前面复制好的公钥内容，然后点击 Add key 按钮即可。
-   ![ssh](/img/ssh/3.png)
+   ![ssh](/blog/img/ssh/3.png)
 
 ## 测试连接
 
 1. 打开 Git Bash 输入： ssh -T git@github.com，将会看到如下提示：
-   ![ssh](/img/ssh/4.png)
+   ![ssh](/blog/img/ssh/4.png)
 2. 输入 yes 后回车，如果提示中的用户名是你的，说明 SSH key 已经配置成功。
-   ![ssh](/img/ssh/5.png)
-   ![ssh](/img/ssh/6.png)
+   ![ssh](/blog/img/ssh/5.png)
+   ![ssh](/blog/img/ssh/6.png)
 
 ## SSH 验证原理
 
@@ -74,7 +74,8 @@ SSH 登录安全性由非对称加密保证，产生密钥时，一次产生两�
 那么如何使用生成的一个私钥一个公钥进行验证呢？
 本地生成一个密钥对，其中公钥放到远程主机，私钥保存在本地
 当本地主机需要登录远程主机时，本地主机向远程主机发送一个登录请求，远程收到消息后，返回一个随机生成的字符串，本地拿到该字符串，用存放在本地的私钥进行加密，再次发送到远程，远程用之前存放在远程的公钥对本地发送过来加密过的字符串进行解密，如果解密后与源字符串等同，则认证成功
-![ssh](/img/ssh/7.png)
+
+![ssh](/blog/img/ssh/7.png)
 
 :::tip
 
