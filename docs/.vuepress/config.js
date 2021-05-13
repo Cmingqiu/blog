@@ -72,7 +72,8 @@ module.exports = {
         title: 'Jenkins自动化部署',
         children: [
           ['Jenkins/concept', '概念'],
-          ['Jenkins/setting', '搭建环境']
+          ['Jenkins/setting', '搭建环境'],
+          ['Jenkins/ngrok', '内网穿透']
         ]
       }
     ]
