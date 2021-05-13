@@ -39,7 +39,7 @@
 2. 系统配置  
    在首页进入 Manage Jenkins，点击 Configure System
    ![jenkins](/blog/img/jenkins/7.png)
-   a. Jenkins Location 需要集成 webhook 的话需要修改此处，因为 github 需要访问。[见如下配置](./#github-配置-webhook)
+   a. Jenkins Location 需要集成 webhook 的话需要修改此处，因为 github 需要访问。[见如下配置](./setting.html#github-配置-webhook)
    ![jenkins](/blog/img/jenkins/8.png)
 
    ![jenkins](/blog/img/jenkins/9.png)
@@ -55,6 +55,10 @@
 
    最后一步：进行触发后的构建, 这里使用的是 shell 脚本进行构建
    ![jenkins](/blog/img/jenkins/13.png)
+
+::: tip
+构建完成的打包结果放在 C:/Users/Administrator/.jenkins/workspace/test_task
+:::
 
 ### Github 配置 webhook
 

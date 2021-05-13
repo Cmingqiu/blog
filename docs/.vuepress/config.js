@@ -1,3 +1,4 @@
+const path = require('path')
 module.exports = {
   base: '/blog/',
   dest: 'dist',
@@ -26,6 +27,7 @@ module.exports = {
     editLinkText: '在 GitHub 上编辑此页',
     smoothScroll: true,
     displayAllHeaders: true, //显示所有页面的标题链接  默认值：false
+    sidebarDepth: 2, // 默认值是 1   最大值是2：同时提取 h2 和 h3 标题
     //导航链接
     nav: [
       {
@@ -56,12 +58,11 @@ module.exports = {
         title: 'SSH配置及原理',
         path: '/SSH/',
         // path: '/foo/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
-        sidebarDepth: 2 // 默认值是 1   最大值是2：同时提取 h2 和 h3 标题
+        //sidebarDepth: 2  
         // collapsable: false,不展开, 默认值是 true,
       },
       {
         title: 'JS基础',
-        sidebarDepth: 2,
         children: [
           ['JS/closure', '闭包'],
           ['JS/prototype', '原型及原型链']
@@ -69,7 +70,6 @@ module.exports = {
       },
       {
         title: 'Jenkins自动化部署',
-        sidebarDepth: 2,
         children: [
           ['Jenkins/concept', '概念'],
           ['Jenkins/setting', '搭建环境']
@@ -80,7 +80,7 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@public': '/blog'
+        '@public': path.resolve(__dirname, './public')
       }
     }
   }

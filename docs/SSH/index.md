@@ -31,7 +31,7 @@ ssh-keygen -t rsa -C "your_email@example.com"
 其中 C:/Users/Administrator/.ssh/id_rsa 保存的为密钥，C:/Users/Administrator/.ssh/id_rsa.pub 保存的为公钥
 :::
 ![ssh](/blog/img/ssh/1.png)
-![ssh](/blog/img/ssh/2.png)
+![ssh](~@public/img/ssh/2.png)
 
 ### 二、将 SSH 私钥添加到 ssh-agent
 
