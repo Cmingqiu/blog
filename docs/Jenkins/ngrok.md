@@ -3,7 +3,7 @@
 GitHub 收到 push 动作后要主动通知 Jenkins，所以 Jenkins 所在服务器一定要有外网 IP，由于 jenkins 配置在本地，所以需要 ngrok 将 IP 暴露到网络中
 
 1. 下载  
-   登录到[https://ngrok.com/download](https://ngrok.com/download)下载 [ngrok 压缩包](/assets/ngrok-stable-windows-amd64.zip)，选 windows 版本
+   登录到[https://ngrok.com/download](https://ngrok.com/download)下载 [ngrok 压缩包](/blog/assets/ngrok-stable-windows-amd64.zip)，选 windows 版本
 2. 解压缩  
    将 ngrok-stable-windows-amd64.zip 文件解压到指定的目录，比如：F:\ngrok-stable-windows-amd64
 3. 获取 token  
