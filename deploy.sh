@@ -25,7 +25,7 @@ git push -f git@github.com:Cmingqiu/blog.git master:doc-pages
 
 
 # 如果使用 travis 持续集成
-# git push -f https://${GITHUB_TOKEN}@github.com/<USERNAME>/<REPO>.git master:gh-pages
+# git push -f https://${GITHUB_TOKEN}@github.com/Cmingqiu/blog.git master:doc-pages
 
 cd -
 
