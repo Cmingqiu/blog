@@ -1,4 +1,4 @@
-### ngrok 下载使用
+### ngrok 下载使用使用
 
 GitHub 收到 push 动作后要主动通知 Jenkins，所以 Jenkins 所在服务器一定要有外网 IP，由于 jenkins 配置在本地，所以需要 ngrok 将 IP 暴露到网络中
 
