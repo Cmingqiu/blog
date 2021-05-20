@@ -1,6 +1,6 @@
 # 业精于勤，荒于嬉；行成于思，毁于随。
 
-[![Build Status](https://travis-ci.com/Cmingqiu/blog.svg?branch=master)](https://travis-ci.com/Cmingqiu/blog)
+[![Build Status](https://travis-ci.com/Cmingqiu/blog.svg?branch=master)](https://travis-ci.com/Cmingqiu/blog)  
 国子先生晨入太学，招诸生立馆下，诲之曰：“业精于勤，荒于嬉；行成于思，毁于随。方今圣贤相逢，治具毕张。拔去凶邪，登崇畯良。占小善者率以录，名一艺者无不庸。爬罗剔抉，刮垢磨光。盖有幸而获选，孰云多而不扬？诸生业患不能精，无患有司之不明；行患不能成，无患有司之不公。”
 
 言未既，有笑于列者曰：“先生欺余哉！弟子事先生，于兹有年矣。先生口不绝吟于六艺之文，手不停披于百家之编。纪事者必提其要，纂言者必钩其玄。贪多务得，细大不捐。焚膏油以继晷，恒兀兀以穷年。先生之业，可谓勤矣。
