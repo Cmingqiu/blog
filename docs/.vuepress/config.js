@@ -26,8 +26,8 @@ module.exports = {
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     smoothScroll: true,
-    displayAllHeaders: true, //显示所有页面的标题链接  默认值：false
     sidebarDepth: 2, // 默认值是 1   最大值是2：同时提取 h2 和 h3 标题
+    // displayAllHeaders: true, //显示所有页面的标题链接,不建议设置true  默认值：false
     //导航链接
     nav: [
       {
@@ -56,16 +56,15 @@ module.exports = {
       ['start/', '起步'],
       {
         title: 'SSH配置及原理',
-        path: '/SSH/',
-        // path: '/foo/',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
-        //sidebarDepth: 2  
-        // collapsable: false,不展开, 默认值是 true,
+        path: '/SSH/',  // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+        //collapsable: true, // 不展开(来让一个组永远都是展开状态), 默认值是 true,
       },
       {
         title: 'JS基础',
         children: [
           ['JS/closure', '闭包'],
-          ['JS/prototype', '原型及原型链']
+          ['JS/prototype', '原型及原型链'],
+          ['JS/20210520', '实现call,apply,bind']
         ]
       },
       {
