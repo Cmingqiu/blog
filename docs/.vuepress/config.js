@@ -31,9 +31,10 @@ module.exports = {
     //导航链接
     nav: [
       {
-        text: '首页',
-        link: '/'
+        text: 'Webpack',
+        link: '/webpack/'
       },
+      { text: 'Node', link: '/node' },
       // { text: 'Guide', link: '/guide/' },
       // { text: 'Google', link: 'https://google.com' },
       {
@@ -64,7 +65,22 @@ module.exports = {
         children: [
           ['JS/closure', '闭包'],
           ['JS/prototype', '原型及原型链'],
-          ['JS/20210520', '实现call,apply,bind']
+          ['JS/browser-render-flow', '浏览器渲染流程'],
+          ['JS/array-uniq-sort', '数组去重和排序'],
+          {
+            title: '每日一题',
+            children: [
+              ['/JS/dailyQuestion/20210520', '实现call,apply,bind'],
+              ['/JS/dailyQuestion/20210521', '如何实现a==1&&a==2&&a==3为true']
+            ]
+          }
+        ]
+      },
+      {
+        title: 'CSS',
+        children: [
+          ['CSS/multi-line-ellipsis', '多行文本显示省略号'],
+          ['CSS/layout', '布局'],
         ]
       },
       {
