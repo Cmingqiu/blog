@@ -3,12 +3,7 @@
     <h2>{{ title }}</h2>
     多行文本收缩省略号
     <div class="box">
-      <p>
-        static：对象遵循常规流。top，right，bottom，left等属性不会被应用。
-        relative：
-        对象遵循常规流，并且参照自身在常规流中的位置通过top，right，bottom，left属性进行偏移时不影响常规流中的任何元素。
-        absolute：对象脱离常规流，使用top，right，bottom，left等属性进行绝对定位，
-      </p>
+      <p :title="str">{{ str }}</p>
     </div>
   </div>
 </template>
@@ -16,9 +11,15 @@
 <script>
 export default {
   props: ['title'],
-  mounted() {
-    console.log(111);
-  }
+  data() {
+    return {
+      str: `static：对象遵循常规流。top，right，bottom，left等属性不会被应用。
+        relative：
+        对象遵循常规流，并且参照自身在常规流中的位置通过top，right，bottom，left属性进行偏移时不影响常规流中的任何元素。
+        absolute：对象脱离常规流，使用top，right，bottom，left等属性进行绝对定位，`
+    };
+  },
+  mounted() {}
 };
 </script>
 

@@ -70,8 +70,9 @@ module.exports = {
           {
             title: '每日一题',
             children: [
-              ['/JS/dailyQuestion/20210520', '实现call,apply,bind'],
-              ['/JS/dailyQuestion/20210521', '如何实现a==1&&a==2&&a==3为true']
+              ['/JS/dailyQuestion/20210520', '20210520:实现call,apply,bind'],
+              ['/JS/dailyQuestion/20210521', '20210521:如何实现a==1&&a==2&&a==3为true'],
+              ['/JS/dailyQuestion/20210522', '20210522:new 关键字原理及实现 new'],
             ]
           }
         ]
