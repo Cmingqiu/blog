@@ -58,7 +58,7 @@ module.exports = {
       {
         title: 'SSH配置及原理',
         path: '/SSH/',  // 可选的, 标题的跳转链接，应为绝对路径且必须存在
-        //collapsable: true, // 不展开(来让一个组永远都是展开状态), 默认值是 true,
+        //collapsable: false,  不展开(来让一个组永远都是展开状态), 默认值是 true折叠,
       },
       {
         title: 'JS基础',
@@ -67,14 +67,6 @@ module.exports = {
           ['JS/prototype', '原型及原型链'],
           ['JS/browser-render-flow', '浏览器渲染流程'],
           ['JS/array-uniq-sort', '数组去重和排序'],
-          {
-            title: '每日一题',
-            children: [
-              ['/JS/dailyQuestion/20210520', '20210520:实现call,apply,bind'],
-              ['/JS/dailyQuestion/20210521', '20210521:如何实现a==1&&a==2&&a==3为true'],
-              ['/JS/dailyQuestion/20210522', '20210522:new 关键字原理及实现 new'],
-            ]
-          }
         ]
       },
       {
@@ -90,6 +82,34 @@ module.exports = {
           ['Jenkins/concept', '概念'],
           ['Jenkins/setting', '搭建环境'],
           ['Jenkins/ngrok', '内网穿透']
+        ]
+      },
+      {
+        title: '每日一题',
+        children: [
+          {
+            title: '2021年',
+            children: [
+              {
+                title: '5月',
+                sidebarDepth: 0,
+                children: [
+                  ['/dailyQuestion/2021/05/20', '0520:实现call,apply,bind'],
+                  ['/dailyQuestion/2021/05/21', '0521:如何实现a==1&&a==2&&a==3为true'],
+                  ['/dailyQuestion/2021/05/22', '0522:new 关键字原理及实现 new'],
+                  ['/dailyQuestion/2021/05/24', '0524:一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？']
+                ]
+              },
+              {
+                title: '6月',
+                sidebarDepth: 0,
+                children: [
+
+                ]
+              }
+            ]
+          }
+
         ]
       }
     ]
