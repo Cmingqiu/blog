@@ -97,7 +97,8 @@ module.exports = {
                   ['/dailyQuestion/2021/05/20', '0520:实现call,apply,bind'],
                   ['/dailyQuestion/2021/05/21', '0521:如何实现a==1&&a==2&&a==3为true'],
                   ['/dailyQuestion/2021/05/22', '0522:new 关键字原理及实现 new'],
-                  ['/dailyQuestion/2021/05/24', '0524:一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？']
+                  ['/dailyQuestion/2021/05/24', '0524:一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？'],
+                  ['/dailyQuestion/2021/05/28', '0528:防抖和节流'],
                 ]
               },
               {
