@@ -30,11 +30,8 @@ module.exports = {
     // displayAllHeaders: true, //显示所有页面的标题链接,不建议设置true  默认值：false
     //导航链接
     nav: [
-      {
-        text: 'Webpack',
-        link: '/webpack/'
-      },
-      { text: 'Node', link: '/node' },
+      { text: 'Webpack', link: 'https://cmingqiu.github.io/webpack/start/', target: '_self' },
+      { text: 'Node', link: '/node/', target: '_self' },
       // { text: 'Guide', link: '/guide/' },
       // { text: 'Google', link: 'https://google.com' },
       {
