@@ -13,12 +13,12 @@ module.exports = {
       'link',
       {
         rel: 'icon',
-        href: './icons/favicon-16x16.png'
+        href: '/icons/favicon-16x16.png'
       }
     ]
   ],
   themeConfig: {
-    logo: './logo.png', //导航logo
+    logo: '/logo.png', //导航logo
     repo: 'Cmingqiu/blog', //导航上的github链接
     docsDir: 'docs',
     // docsRepo: '',
