@@ -57,6 +57,7 @@ module.exports = {
         path: '/SSH/',  // 可选的, 标题的跳转链接，应为绝对路径且必须存在
         //collapsable: false,  不展开(来让一个组永远都是展开状态), 默认值是 true折叠,
       },
+      ['npm/', '搭建npm私服'],
       {
         title: 'JS基础',
         children: [
