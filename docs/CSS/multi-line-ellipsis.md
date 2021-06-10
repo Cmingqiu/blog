@@ -57,3 +57,85 @@ p {
 :::tip 温馨提示
 vue 插件 轻松实现多行文本截断。 [vue-clamp](https://justineo.github.io/vue-clamp/demo/?lang=zh&fileGuid=XtpJhGpvWxj6qcTr)
 :::
+
+TODO
+
+-[x]展开收起组件
+
+```js
+<template>
+  <div class="table-cell-more">
+    <template v-if="value">
+      <span
+        class="text-container"
+        :style="isCollapse ? collpaseStyle : expandStyle"
+      >
+        {{ value }}
+      </span>
+
+      <span class="link-txt" @click="isCollapse = !isCollapse">
+        {{ isCollapse ? '展开' : '收起' }}
+      </span>
+    </template>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'TableCellMore',
+  props: {
+    value: String,
+    require: true
+  },
+  computed: {
+    collpaseStyle() {
+      return {
+        width: this.elWidth - 40 + 'px',
+        overflow: 'hidden',
+        'white-space': 'nowrap',
+        'text-overflow': 'ellipsis'
+      };
+    },
+    expandStyle() {
+      return {
+        width: this.elWidth + 'px',
+        overflow: 'unset',
+        'white-space': 'normal',
+        'text-overflow': 'unset'
+      };
+    }
+  },
+  data() {
+    return {
+      isCollapse: true, //折叠
+      elWidth: 50
+    };
+  },
+  methods: {
+    resize() {
+      this.elWidth = this.$el.clientWidth;
+    }
+  },
+  mounted() {
+    this.resize();
+    window.addEventListener('resize', this.resize);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resize);
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.table-cell-more {
+  .text-container {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .link-txt {
+    cursor: pointer;
+    color: #007eff;
+  }
+}
+</style>
+```
