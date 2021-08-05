@@ -1,3 +1,5 @@
 node_modules
 docs/.vuepress/dist
 dist
+vue3-learn/packages/*/dist
+vue3-learn/node_modules

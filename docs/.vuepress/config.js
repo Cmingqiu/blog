@@ -22,7 +22,7 @@ module.exports = {
     repo: 'Cmingqiu/blog', //导航上的github链接
     docsDir: 'docs',
     // docsRepo: '',
-    lastUpdated: '上次更新:',
+    // lastUpdated: '上次更新:', //默认不显示更新时间
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
     smoothScroll: true,
@@ -30,23 +30,27 @@ module.exports = {
     // displayAllHeaders: true, //显示所有页面的标题链接,不建议设置true  默认值：false
     //导航链接
     nav: [
-      { text: 'Webpack', link: 'https://cmingqiu.github.io/webpack/start/', target: '_self' },
-      { text: 'Node', link: '/node/', target: '_self' },
-      // { text: 'Guide', link: '/guide/' },
-      // { text: 'Google', link: 'https://google.com' },
+      { text: 'Blog', link: '/start/', target: '_self' },
       {
-        text: '语言',
-        items: [
-          {
-            text: '中文',
-            link: 'https://www.baidu.com'
-          },
-          {
-            text: 'English',
-            link: 'https://google.com'
-          }
-        ]
-      }
+        text: 'Webpack',
+        link: 'https://cmingqiu.github.io/webpack/start/',
+        target: '_self'
+      },
+      { text: 'Node', link: '/node/', target: '_self' },
+      { text: 'Vue', link: '/vue/', target: '_self' }
+      // {
+      //   text: '语言',
+      //   items: [
+      //     {
+      //       text: '中文',
+      //       link: 'https://www.baidu.com'
+      //     },
+      //     {
+      //       text: 'English',
+      //       link: 'https://google.com'
+      //     }
+      //   ]
+      // }
     ],
     //简单例子
     //sidebar: ['/', 'basic/button', ['form/input', '表单']]
@@ -54,7 +58,7 @@ module.exports = {
       ['start/', '起步'],
       {
         title: 'SSH配置及原理',
-        path: '/SSH/',  // 可选的, 标题的跳转链接，应为绝对路径且必须存在
+        path: '/SSH/' // 可选的, 标题的跳转链接，应为绝对路径且必须存在
         //collapsable: false,  不展开(来让一个组永远都是展开状态), 默认值是 true折叠,
       },
       ['npm/', '搭建npm私服'],
@@ -64,14 +68,14 @@ module.exports = {
           ['JS/closure', '闭包'],
           ['JS/prototype', '原型及原型链'],
           ['JS/browser-render-flow', '浏览器渲染流程'],
-          ['JS/array-uniq-sort', '数组去重和排序'],
+          ['JS/array-uniq-sort', '数组去重和排序']
         ]
       },
       {
         title: 'CSS',
         children: [
           ['CSS/multi-line-ellipsis', '多行文本显示省略号'],
-          ['CSS/layout', '布局'],
+          ['CSS/layout', '布局']
         ]
       },
       {
@@ -93,22 +97,28 @@ module.exports = {
                 sidebarDepth: 0,
                 children: [
                   ['/dailyQuestion/2021/05/20', '0520:实现call,apply,bind'],
-                  ['/dailyQuestion/2021/05/21', '0521:如何实现a==1&&a==2&&a==3为true'],
-                  ['/dailyQuestion/2021/05/22', '0522:new 关键字原理及实现 new'],
-                  ['/dailyQuestion/2021/05/24', '0524:一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？'],
-                  ['/dailyQuestion/2021/05/28', '0528:防抖和节流'],
+                  [
+                    '/dailyQuestion/2021/05/21',
+                    '0521:如何实现a==1&&a==2&&a==3为true'
+                  ],
+                  [
+                    '/dailyQuestion/2021/05/22',
+                    '0522:new 关键字原理及实现 new'
+                  ],
+                  [
+                    '/dailyQuestion/2021/05/24',
+                    '0524:一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？'
+                  ],
+                  ['/dailyQuestion/2021/05/28', '0528:防抖和节流']
                 ]
               },
               {
                 title: '6月',
                 sidebarDepth: 0,
-                children: [
-
-                ]
+                children: []
               }
             ]
           }
-
         ]
       }
     ]
@@ -120,4 +130,4 @@ module.exports = {
       }
     }
   }
-};
+}

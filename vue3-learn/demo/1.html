@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script src="../packages/reactivity/dist/reactivity.global.js"></script>
+
+  <script>
+    const { reactive, shallowReactive, readonly, shallowReadonly, effect } =
+      VueReactivity;
+    let obj = { arr: [10, 20, 30] };
+    let proxy = reactive(obj);
+    // proxy.arr.push(33);
+    // proxy.arr[2] = 200;
+
+    //默认执行一次，执行的时候将属性和effect关联起来，  当属性发生改变，再次执行effect
+    effect(() => {
+      /* console.log(proxy.arr[2]);
+      console.log(JSON.stringify(proxy.arr)); */
+      /*  effect(() => {
+        console.log('proxy.age', proxy.age);
+      }); */
+      // console.log('proxy.name', proxy.tt);
+    });
+
+    setTimeout(() => {
+      /* proxy.arr[3] = 100;
+      proxy.arr.push(100 ); */
+    }, 1000);
+
+    /* 
+      1. JSON.stringify(proxy.arr) 修改数组下标 ，触发更新
+      2. 修改数组length,触发数组更新
+    */
+  </script>
+</html>

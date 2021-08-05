@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+  <script src="../packages/reactivity/dist/reactivity.global.js"></script>
+
+  <script>
+    const { reactive, effect, toRef, toRefs } = VueReactivity;
+    let proxy = reactive({ name: 'xxxx', age: 20 });
+    /* let name = toRef(proxy, 'name');
+    console.log(name); */
+    // const {name} =reactive({name:'xxx'})
+    // const {name} =reactive({name:ref('xxxx')})
+    /*  const p = reactive({ a: [2, 3, 4] });
+    let { a } = toRefs(p);
+    console.log(a); */
+  </script>
+</html>
