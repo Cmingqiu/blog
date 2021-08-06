@@ -5,13 +5,15 @@ import { extend } from '@vue/shared';
 import { nodeOps } from './nodeOps';
 import { patchProp } from './patchProp';
 
-const rendererOptions = extend(nodeOps, { patchProp })
+const rendererOptions = extend(nodeOps, { patchProp });
 
 export const createApp = (component, props) => {
-  let app = createRenderer(rendererOptions).createApp(component, props)
-  let { mount } = app
-  app.mount = function (container) {
-    mount(container)
-  }
-  return app
-}
+  let app = createRenderer(rendererOptions).createApp(component, props);
+  let { mount } = app;
+  app.mount = function(container) {
+    container = rendererOptions.querySelector(container);
+    container.innerHTML = ''; //挂在之前先清空容器
+    mount(container);
+  };
+  return app;
+};

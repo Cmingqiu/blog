@@ -10,19 +10,29 @@
     <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
     <div id="app">1111</div>
     <script>
-      const { createApp } = VuRuntimeDOM
+      const { createApp } = VuRuntimeDOM;
       const App = {
-        setup() {
+        setup(props, ctx) {
+          /* //1.返回render函数
           return () => {
             return {
               name: 'name'
-            }
-          }
+            };
+          }; */
+
+          //2.返回对象，可以在模板上取值
+          return {
+            name: 'name'
+          };
         }
-      }
+        /* //3.配置render，渲染到容器中
+        render(){
+          return
+        } */
+      };
       createApp(App, {
         age: 20
-      }).mount('#app')
+      }).mount('#app');
     </script>
   </body>
 </html>
