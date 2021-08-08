@@ -2,7 +2,7 @@ import { isArray, isIntegerKey } from '@vue/shared';
 
 /**
  * @param fn
- * @param options {immediate,lazy,schedular}
+ * @param options {immediate,lazy,scheduler}
  * @returns
  */
 export function effect(fn, options: any = {}) {
@@ -129,16 +129,16 @@ export function trigger(target, type, key, newValue?, oldValue?) {
    */
   function add(effects) {
     if (effects) {
-      effects.forEach((effect) => effectsSet.add(effect));
+      effects.forEach(effect => effectsSet.add(effect));
     }
   }
 }
 
 function triggerEffects(effects) {
-  effects.forEach((effect) => {
-    if (effect.options.schedular) {
+  effects.forEach(effect => {
+    if (effect.options.scheduler) {
       //自定义执行策略schedular
-      effect.options.schedular();
+      effect.options.scheduler(effect);
     } else {
       effect();
     }

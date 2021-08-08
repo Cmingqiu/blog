@@ -1,10 +1,14 @@
 import { isFunction, isObject } from '@vue/shared';
 
+export let currentInstance = null;
+export const getCurrentInstance = () => currentInstance;
+export const setCurrentInstance = instance => (currentInstance = instance);
+
 /**
  * 根据vnode创建实例
  */
 let uid = 0;
-export const createComponentInstance = (vnode) => {
+export const createComponentInstance = vnode => {
   const instance = {
     uid: uid++,
     type: vnode.type, //用户传入的对象
@@ -25,7 +29,7 @@ export const createComponentInstance = (vnode) => {
   return instance;
 };
 
-export const setupComponent = (instance) => {
+export const setupComponent = instance => {
   const { props, children } = instance.vnode;
   //初始化属性、插槽 ;属性响应式处理
   instance.props = props;
@@ -35,13 +39,16 @@ export const setupComponent = (instance) => {
   setupStatefulComponent(instance);
 };
 
-const setupStatefulComponent = (instance) => {
+const setupStatefulComponent = instance => {
   const component = instance.type;
   const { setup } = component;
   if (setup) {
+    currentInstance = instance; //setup调用之前设置好currentInstance，便于生命周期缓存正确的实例
     let setupResult = setup(instance.props, createSetupContext(instance));
-
+    currentInstance = null;
     handleSetupResult(instance, setupResult);
+  } else {
+    finishComponentSetup(instance);
   }
 };
 
@@ -67,13 +74,18 @@ function handleSetupResult(instance, setupResult) {
     //setup返回的是对象
     instance.setupState = setupResult;
   }
+  finishComponentSetup(instance);
+}
+
+function finishComponentSetup(instance) {
   if (!instance.render) {
     const component = instance.type;
+    let render = null;
     if (component.render) {
-      instance.render = component.render;
+      render = component.render;
     } else if (component.template) {
       //模板编译 compileToFunction
     }
+    instance.render = render;
   }
-  console.log(instance, setupResult);
 }

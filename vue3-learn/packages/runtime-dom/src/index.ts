@@ -1,9 +1,12 @@
 // 抹平平台之间的差异，创建支持dom操作的api
 
-import { createRenderer } from '@vue/runtime-core';
+import { createRenderer, h } from '@vue/runtime-core';
 import { extend } from '@vue/shared';
 import { nodeOps } from './nodeOps';
 import { patchProp } from './patchProp';
+
+export * from '@vue/reactivity';
+export * from '@vue/runtime-core';
 
 const rendererOptions = extend(nodeOps, { patchProp });
 

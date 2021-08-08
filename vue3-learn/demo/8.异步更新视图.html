@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
+    <div id="app">1111</div>
+    <script>
+      const { createApp, h, reactive, toRefs, ref } = VuRuntimeDOM;
+      const App = {
+        setup(props, ctx) {
+          const state = reactive({ name: 'zs', age: 20 });
+          let flag = ref(true);
+          setTimeout(() => {
+            state.name = 'zsx1';
+            state.name = 'zsx2';
+            state.name = 'zsx3';
+            state.name = 'zsx4';
+            state.name = 'zsx5';
+          }, 1000);
+          return {
+            ...toRefs(state),
+            flag
+          };
+        },
+        render() {
+          return h(
+            'div',
+            {
+              style: {
+                color: '#fff',
+                background: 'red'
+              }
+            },
+            `${this.name.value}今年${this.age.value}岁了`
+          );
+        }
+      };
+      createApp(App, {
+        id: 10
+      }).mount('#app');
+    </script>
+  </body>
+</html>

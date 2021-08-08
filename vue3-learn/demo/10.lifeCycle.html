@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
+    <div id="app">1111</div>
+    <script>
+      const {
+        createApp,
+        h,
+        reactive,
+        onBeforeMount,
+        onMounted,
+        onBeforeUpdate,
+        onUpdated
+      } = VuRuntimeDOM;
+
+      const App = {
+        setup(props, ctx) {
+          const state = reactive({ name: 'zs', age: 20 });
+          setTimeout(() => {
+            state.age = 21;
+          }, 1000);
+
+          onBeforeMount(function() {
+            console.log(arguments);
+            console.log('onBeforeMount');
+          });
+          onMounted(() => {
+            console.log('onMounted');
+          });
+          onBeforeUpdate(() => {
+            console.log('onBeforeUpdate');
+          });
+          onUpdated(() => {
+            console.log('onUpdated');
+          });
+
+          return () => {
+            return h(
+              'div',
+              {
+                style: {
+                  color: '#fff',
+                  background: 'red'
+                }
+              },
+              `${state.name}今年${state.age}岁了`
+            );
+          };
+        }
+      };
+      createApp(App, {
+        id: 10
+      }).mount('#app');
+    </script>
+  </body>
+</html>

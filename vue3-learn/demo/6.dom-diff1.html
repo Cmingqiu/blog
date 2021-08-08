@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
+    <div id="app">1111</div>
+    <script>
+      const { createApp, h, reactive, toRefs, ref } = VuRuntimeDOM;
+      const App = {
+        setup(props, ctx) {
+          const state = reactive({ name: 'zs', age: 20 });
+          let flag = ref(true);
+          setTimeout(() => {
+            flag.value = false;
+          }, 2000);
+          return {
+            ...toRefs(state),
+            flag
+          };
+        },
+        render() {
+          if (this.flag.value) {
+            return h(
+              'div',
+              {
+                style: {
+                  color: '#fff',
+                  background: 'red'
+                }
+              },
+              'div000'
+            );
+          } else {
+            return h(
+              'div',
+              {
+                style: {
+                  color: 'green'
+                }
+              },
+              [h('div', '1'), h('div', '2')]
+            );
+          }
+
+          /* return h(
+            'div',
+            {
+              style: {
+                background: 'red',
+                color: '#fff'
+              },
+              onClick: () => {
+                this.name.value = 'xx';
+              }
+            },
+            `${this.name.value}今年${this.age.value}岁了`
+          ); */
+        }
+      };
+      createApp(App, {
+        id: 10
+      }).mount('#app');
+    </script>
+  </body>
+</html>

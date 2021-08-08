@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
+    <div id="app">1111</div>
+
+    <script>
+      const { createApp, h, reactive, watch, watchEffect } = VuRuntimeDOM;
+
+      const App = {
+        setup(props, ctx) {
+          const state = reactive({ name: 'zs', age: 20 });
+          /* watch(
+            () => state.age,
+            (newValue, oldValue) => {
+              console.log(
+                '监听age是否发生改变，发生改变再次执行这个函数，默认不会立即执行',
+                newValue,
+                oldValue
+              );
+            },
+            {
+              immediate: true
+            }
+          ); */
+          watchEffect(() => {
+            console.log('watchEffect: age', state.age);
+          });
+
+          setTimeout(() => {
+            state.age = 21;
+          }, 1000);
+
+          return () => {
+            return h(
+              'div',
+              {
+                style: {
+                  color: '#fff',
+                  background: 'red'
+                }
+              },
+              `${state.name}今年${state.age}岁了`
+            );
+          };
+        }
+      };
+      createApp(App, {
+        id: 10
+      }).mount('#app');
+    </script>
+  </body>
+</html>
