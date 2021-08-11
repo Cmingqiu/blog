@@ -1,0 +1,22 @@
+{
+  "name": "vue2.x-learn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "cross-env NODE_ENV=development rollup -c -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "cross-env": "^7.0.3",
+    "rollup": "^2.52.7",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-serve": "^1.1.0"
+  }
+}
