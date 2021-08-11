@@ -10,7 +10,7 @@ class Observer {
     });
 
     if (Array.isArray(value)) {
-      //对数组响应式处理，APO重写数组方法
+      //对数组响应式处理，APO重写数组方法，定义在data中的数组的7个方法都被改写
       // value.__proto__ = arrayMethods
       Object.setPrototypeOf(value, arrayMethods);
       // 如果数组中是对象，还要进行数据劫持
@@ -19,33 +19,34 @@ class Observer {
       this.walk(value);
     }
   }
-  observeArray(value) {
+  observeArray (value) {
     value.forEach(v => observe(v));
   }
   //对象响应式处理
-  walk(value) {
+  walk (value) {
     Object.keys(value).forEach(key => {
       defineReactive(value, key, value[key]);
     });
   }
 }
 
-export function observe(data) {
-  if (typeof data !== 'object' || data === null) return;
-  if (data.__ob__) return; //已经观测过就不再处理
-  return new Observer(data); //通过instanceOf Observer 可以知道数据是否被观测过
-}
-
-export function defineReactive(obj, key, value) {
+export function defineReactive (obj, key, value) {
   observe(value); //递归拦截数据
   Object.defineProperty(obj, key, {
-    get() {
+    get () {
       return value;
     },
-    set(newVal) {
+    set (newVal) {
       if (newVal === value) return;
       observe(newVal); // 对set的数据拦截
       value = newVal;
     }
   });
+}
+
+
+export function observe (data) {
+  if (typeof data !== 'object' || data === null) return;
+  if (data.__ob__) return; //已经观测过就不再处理
+  return new Observer(data); //通过instanceOf Observer 可以知道数据是否被观测过
 }

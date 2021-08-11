@@ -4,7 +4,7 @@
 
 ```js
 function Vue() {}
-Vue.extend = function (options) {
+Vue.extend = function(options) {
   function Sub() {
     this.data = Sub.options.data;
   }
@@ -24,3 +24,6 @@ let s2 = new Sub();
 s1.data.name = 'yyy';
 console.log(s2.data); //s2.data 会被修改
 ```
+
+3. Vue.mixin 的原理？
+4. 生命周期合并策略是什么？
