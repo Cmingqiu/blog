@@ -27,3 +27,18 @@ console.log(s2.data); //s2.data 会被修改
 
 3. Vue.mixin 的原理？
 4. 生命周期合并策略是什么？
+5. 如何挂载组件？
+6. 模板编译阶段：template -> ast -> render
+   1）将 template 转成 ast 语法树；
+   2）遍历 ast，标记静态节点，便于 dom diff 优化；
+   3）将 ast 转成 render 函数。字符串拼接，使用 new Function + with 语法生产 render 函数
+
+  <!-- 更新组件调用此方法 
+   数据改变后，dom diff重新生成vnode，转真实dom，挂载真实dom
+  -->
+
+    ```js
+    const updateComponent = () => {
+      vm._update(vm.render());
+    };
+    ```

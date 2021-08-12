@@ -1,4 +1,5 @@
 import { initMixin } from './init';
+import { lifeCycleMixin } from './lifecycle';
 
 // 给Vue构造函数扩展原型方法和静态方法
 function Vue(options) {
@@ -6,5 +7,6 @@ function Vue(options) {
 }
 
 initMixin(Vue);
+lifeCycleMixin(Vue);
 
 export default Vue;

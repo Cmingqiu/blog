@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>依赖收集</title>
+    <title>4.组件初始化挂载</title>
   </head>
   <body>
     <div id="app">app:{{age}}</div>
@@ -28,23 +28,11 @@
                 backgroundColor: 'red'
               }
             },
-            this.name +
-            this.name +
-            this.name +
-            ' 今年 ' /*  + this.age */ +
-              ' 岁了'
+            this.name + ' 今年 ' + this.age + ' 岁了'
           );
         }
       });
       vm.$mount('#app');
-      console.log(vm);
-
-      setTimeout(() => {
-        vm.name = 'hahah';
-        vm.name = 'hahah2';
-        vm.name = 'hahah3';
-        vm.name = 'hahah4';
-      }, 1000);
     </script>
   </body>
 </html>

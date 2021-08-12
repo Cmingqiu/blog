@@ -14,7 +14,7 @@ const methods = [
 
 let arrayMethods = Object.create(arrayOldPrototype);
 methods.forEach(method => {
-  arrayMethods[method] = function (...args) {
+  arrayMethods[method] = function(...args) {
     //...
     const result = arrayOldPrototype[method].call(this, ...args);
     //拦截新增到数组中的数据
@@ -29,11 +29,11 @@ methods.forEach(method => {
         inserted = args.slice(2); // arr.splice(1,1,'s')
         break;
     }
+    ob.dep.notify();
     //调用observeArray,对数组处理
     if (inserted) {
       ob.observeArray(inserted);
     }
-
     return result;
   };
 });
