@@ -42,3 +42,5 @@ console.log(s2.data); //s2.data 会被修改
       vm._update(vm.render());
     };
     ```
+
+7. 合并？ 拷贝？ 防抖？ 节流？ 柯里化？

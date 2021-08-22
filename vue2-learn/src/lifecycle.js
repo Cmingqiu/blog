@@ -1,5 +1,6 @@
 import { h } from './compile/h';
 import Watcher from './observer/watcher';
+import { callHook } from './utils';
 import { createElement, createTextElement, patch } from './vdom';
 
 export const mountComponent = vm => {
@@ -9,7 +10,9 @@ export const mountComponent = vm => {
   };
   // updateComponent();
 
-  return new Watcher(updateComponent);
+  return new Watcher(vm, updateComponent, () => {
+    callHook('beforeUpdate');
+  });
 };
 
 export function lifeCycleMixin(Vue) {

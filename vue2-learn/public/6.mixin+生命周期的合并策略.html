@@ -4,24 +4,49 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>watch</title>
+    <title>mixin+生命周期的合并策略</title>
   </head>
   <body>
     <div id="app">app:{{age}}</div>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.js"></script> -->
     <script src="/dist/bundle.js"></script>
 
     <script>
+      Vue.mixin({
+        a: 1,
+        data() {
+          return {
+            title: '全局混入1'
+          };
+        },
+        beforeCreate() {
+          console.log('Vue.mixin : beforeCreate');
+        },
+        created() {
+          console.log('Vue.mixin : created');
+        },
+        mounted() {
+          console.log('Vue.mixin : mounted');
+        }
+      });
+
       let vm = new Vue({
+        a: 'a',
+        b: 2,
         data() {
           return {
             name: 'zf',
             age: 20
           };
         },
-        watch: {
-          name(newVal, oldVal) {
-            console.log('watch options: ', newVal, oldVal);
-          }
+        beforeCreate() {
+          console.log('vm : beforeCreate');
+        },
+        created() {
+          console.log('vm : created');
+        },
+        mounted() {
+          console.log('vm : mounted');
         },
         render(h) {
           return h(
@@ -38,13 +63,6 @@
       });
       vm.$mount('#app');
       // console.log(vm, Vue.options);
-
-      vm.$watch('name', (newVal, oldVal) => {
-        console.log('$watch: ', newVal, oldVal);
-      });
-      setTimeout(() => {
-        vm.name = 'hahahhaha';
-      }, 1000);
     </script>
   </body>
 </html>

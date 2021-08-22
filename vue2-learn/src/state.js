@@ -1,4 +1,5 @@
 import { observe } from './observer';
+import { initWatch } from './observer/watch';
 import { proxy } from './utils';
 
 export function initState(vm) {
@@ -16,7 +17,7 @@ export function initState(vm) {
     // initComputed(vm)
   }
   if (opts.watch) {
-    // initWatch(vm)
+    initWatch(vm);
   }
 }
 

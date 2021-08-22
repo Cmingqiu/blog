@@ -4,10 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>watch</title>
+    <title>依赖收集+异步更新</title>
   </head>
   <body>
     <div id="app">app:{{age}}</div>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.js"></script> -->
     <script src="/dist/bundle.js"></script>
 
     <script>
@@ -18,11 +19,6 @@
             age: 20
           };
         },
-        watch: {
-          name(newVal, oldVal) {
-            console.log('watch options: ', newVal, oldVal);
-          }
-        },
         render(h) {
           return h(
             'div',
@@ -32,18 +28,22 @@
                 backgroundColor: 'red'
               }
             },
-            this.name + ' 今年 ' + this.age + ' 岁了'
+            this.name +
+            this.name +
+            this.name +
+            ' 今年 ' /*  + this.age */ +
+              ' 岁了'
           );
         }
       });
       vm.$mount('#app');
-      // console.log(vm, Vue.options);
+      console.log(vm);
 
-      vm.$watch('name', (newVal, oldVal) => {
-        console.log('$watch: ', newVal, oldVal);
-      });
       setTimeout(() => {
-        vm.name = 'hahahhaha';
+        vm.name = 'hahah';
+        vm.name = 'hahah2';
+        vm.name = 'hahah3';
+        vm.name = 'hahah4';
       }, 1000);
     </script>
   </body>
