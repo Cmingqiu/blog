@@ -1,3 +1,5 @@
+export { nextTick } from './next-tick';
+
 export function proxy(vm, source, key) {
   Object.defineProperty(vm, key, {
     get() {
@@ -72,18 +74,18 @@ export function mergeOptions(parent, children) {
   let options = {};
   //1.先遍历children，再遍历parent，有重名的以children的为主
   for (let key in children) {
-    mergeField(children, key);
+    mergeField(key);
   }
   //2.最后遍历parent,合并parent上有但children没有的属性
   for (let key in parent) {
     if (!children.hasOwnProperty(key)) {
-      mergeField(parent, key);
+      mergeField(key);
     }
   }
-  function mergeField(obj, key) {
+  function mergeField(key) {
     options[key] = strats[key]
       ? strats[key](parent[key], children[key])
-      : obj[key];
+      : children[key] || parent[key];
   }
 
   return options;
