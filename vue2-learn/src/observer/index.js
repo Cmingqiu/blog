@@ -59,7 +59,7 @@ export function defineReactive(obj, key, value) {
     },
     set(newVal) {
       if (newVal === value) return;
-      observe(newVal); // 对set的数据拦截
+      childOb = observe(newVal); // 对set的数据拦截
       value = newVal;
       dep.notify();
     }

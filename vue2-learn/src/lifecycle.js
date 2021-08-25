@@ -5,7 +5,7 @@ import { createElement, createTextElement, patch } from './vdom';
 
 export const mountComponent = vm => {
   const updateComponent = () => {
-    //1.产生vnode 2.根据vnode生产真实dom
+    //1.调用render函数产生vnode 2.根据vnode生产真实dom
     vm._update(vm._render());
   };
   // updateComponent();
