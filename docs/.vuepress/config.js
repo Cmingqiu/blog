@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 module.exports = {
   base: '/blog/',
   dest: 'dist',
@@ -38,19 +38,19 @@ module.exports = {
       },
       { text: 'Node', link: '/node/', target: '_self' },
       { text: 'Vue', link: '/vue/', target: '_self' }
-      // {
-      //   text: '语言',
-      //   items: [
-      //     {
-      //       text: '中文',
-      //       link: 'https://www.baidu.com'
-      //     },
-      //     {
-      //       text: 'English',
-      //       link: 'https://google.com'
-      //     }
-      //   ]
-      // }
+      /* {
+        text: '语言',
+        items: [
+          {
+            text: '中文',
+            link: 'https://www.baidu.com'
+          },
+          {
+            text: 'English',
+            link: 'https://google.com'
+          }
+        ]
+      } */
     ],
     //简单例子
     //sidebar: ['/', 'basic/button', ['form/input', '表单']]
@@ -88,37 +88,22 @@ module.exports = {
       },
       {
         title: '每日一题',
+        sidebarDepth: 0,
         children: [
-          {
-            title: '2021年',
-            children: [
-              {
-                title: '5月',
-                sidebarDepth: 0,
-                children: [
-                  ['/dailyQuestion/2021/05/20', '0520:实现call,apply,bind'],
-                  [
-                    '/dailyQuestion/2021/05/21',
-                    '0521:如何实现a==1&&a==2&&a==3为true'
-                  ],
-                  [
-                    '/dailyQuestion/2021/05/22',
-                    '0522:new 关键字原理及实现 new'
-                  ],
-                  [
-                    '/dailyQuestion/2021/05/24',
-                    '0524:一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？'
-                  ],
-                  ['/dailyQuestion/2021/05/28', '0528:防抖和节流']
-                ]
-              },
-              {
-                title: '6月',
-                sidebarDepth: 0,
-                children: []
-              }
-            ]
-          }
+          ['dailyQuestion/1.实现call,apply,bind', '1.实现call,apply,bind'],
+          [
+            'dailyQuestion/2.如何实现a==1&&a==2&&a==3为true',
+            '2.如何实现a==1&&a==2&&a==3为true'
+          ],
+          [
+            'dailyQuestion/3.new 关键字原理及实现 new',
+            '3.new 关键字原理及实现 new'
+          ],
+          [
+            'dailyQuestion/4.一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？',
+            '4.一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？'
+          ],
+          ['dailyQuestion/5.防抖和节流', '5.防抖和节流']
         ]
       }
     ]
@@ -130,4 +115,4 @@ module.exports = {
       }
     }
   }
-}
+};
