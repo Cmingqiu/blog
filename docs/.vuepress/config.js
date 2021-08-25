@@ -36,7 +36,7 @@ module.exports = {
         link: 'https://cmingqiu.github.io/webpack/start/',
         target: '_self'
       },
-      { text: 'Node', link: '/node/', target: '_self' },
+      { text: 'Node', link: '/Node/', target: '_self' },
       { text: 'Vue', link: '/vue/', target: '_self' }
       /* {
         text: '语言',
