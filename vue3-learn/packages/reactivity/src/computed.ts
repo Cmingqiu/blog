@@ -6,6 +6,7 @@ import { effect, track, trigger } from './effect';
  * 2.computed内部使用lazy为true的effect
  * 3.缓存结果，多次取computed的值从缓存中取
  * 4.当依赖属性发生改变，执行computed的effect的schedular;当取值的时候再次执行computed的fn
+ * 5.属性改变 --> 触发computed effect更新 --> 触发渲染effect更新
  */
 
 export function computed(getOrOptions) {
