@@ -49,7 +49,7 @@ function uniq4(arr) {
   if (!Array.isArray(arr)) return arr;
   let obj = {},
     newArr = [];
-  arr.forEach((v) => {
+  arr.forEach(v => {
     if (!obj[v]) {
       newArr.push(v);
       obj[v] = true;
@@ -131,3 +131,54 @@ function uniq8(arr) {
 <test />
 
 ## 排序
+
+1. 快速排序：利用递归排序
+
+```js
+function quickSort(arr) {
+  if (!Array.isArray(arr) || arr.length <= 1) return arr;
+  let left = [], right = [];
+  const middleValue = arr.splice(Math.round(arr.length / 2), 1)[0];
+  for (let i = 0; i < arr.length; i++) {
+    //升序
+    if (arr[i] < middleValue) left.push(arr[i]);
+    else right.push(arr[i]);
+  }
+  return quickSort(left).concat(middleValue, quickSort(right));
+}
+```
+
+2. 冒泡排序：两两比较
+   外层控制循环次数，比如[5,2,9,10,1]  两两交换只需要 4 次，所以-1
+
+```js
+function bubbleSort(arr) {
+  if (!Array.isArray(arr)) return arr;
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        //升序 大数下沉，小数上浮
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; //两两交换
+      }
+    }
+  }
+  return arr;
+}
+```
+
+3. 选择排序：假设一个最小值索引，依次比较大小，找出剩下最小值，两两交换，每轮循环排序一位
+
+```js
+function chooseSort(arr) {
+  if (!Array.isArray(arr)) return arr;
+  for (let i = 0; i < arr.length; i++) {
+    //每轮循环交换一个
+    let minIdx = i; //升序
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[minIdx]) minIdx = j;
+    }
+    if (minIdx !== i) [arr[minIdx], arr[i]] = [arr[i], arr[minIdx]];
+  }
+  return arr;
+}
+```
