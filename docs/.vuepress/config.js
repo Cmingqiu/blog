@@ -68,7 +68,8 @@ module.exports = {
           ['JS/closure', '闭包'],
           ['JS/prototype', '原型及原型链'],
           ['JS/browser-render-flow', '浏览器渲染流程'],
-          ['JS/array-uniq-sort', '数组去重和排序']
+          ['JS/array-uniq-sort', '数组去重和排序'],
+          ['JS/promise', 'promise']
         ]
       },
       {
