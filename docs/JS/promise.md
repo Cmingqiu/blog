@@ -15,7 +15,7 @@
    - 如果返回的是 promise，会等待 promise 执行完成，判断这个 promise 的状态，这个 promise 状态如果是成功就将成功结果传入下一个成功回调，如果是失败结果传入下一个失败的回调
 9. promise 之所以能进行链式调用，并不是在 then 中返回 this，因为状态是无法改变的，不可能上一个是成功状态，下一个走失败状态，所以是因为在 then 中返回了一个新的 promise，才能链式调用，和 jquery 不一样
 10. then 的参数是可选的，如果不是函数就忽略，向下透传
-11. catch 没有链式调用。catch 本质就是第一个参数未 null 的 then
+11. catch 本质就是第一个参数未 null 的 then
 
 ## 基本的 promise
 
@@ -265,7 +265,7 @@ class Promise {
         const p = promise[i];
         if (typeof p.then === 'function') {
           //让promise执行 promise.then()
-          processResult(i, Promise.resolve(p).then());
+          // Promise.resolve(p).then(y=> processResult(i,y))    ;
           p.then(y => processResult(i, y), reject);
         } else {
           processResult(i, p);
