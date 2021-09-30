@@ -87,6 +87,7 @@ module.exports = {
           ['Jenkins/ngrok', '内网穿透']
         ]
       },
+      ['vue-router/', '手写vue-router源码'],
       {
         title: '每日一题',
         sidebarDepth: 0,
