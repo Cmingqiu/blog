@@ -3,11 +3,17 @@ let pending = false;
 let timerFunc;
 
 if (typeof Promise !== 'undefined') {
+  let p = Promise.resolve();
   timerFunc = () => {
-    Promise.resolve().then(flushCallbacks);
+    p.then(flushCallbacks);
   };
 } else if (typeof MutationObserver !== 'undefined') {
-  //MutationObserver
+  const observer = new MutationObserver(flushCallbacks);
+  const textNode = document.createTextNode(1);
+  observer.observe(textNode, { characterData: true });
+  timerFunc = () => {
+    textNode.textContent = 2;
+  };
 } else if (typeof setImmediate !== 'undefined') {
   timerFunc = () => {
     setImmediate(flushCallbacks);
@@ -18,14 +24,27 @@ if (typeof Promise !== 'undefined') {
   };
 }
 
-export function nextTick(fn, opt) {
-  if (!callbacks.includes(fn)) {
-    callbacks.push(fn);
-
-    if (!pending) {
-      timerFunc();
-      pending = true;
+export function nextTick(cb, ctx) {
+  let _resolve;
+  callbacks.push(() => {
+    if (cb) {
+      try {
+        cb.call(ctx);
+      } catch (error) {
+        console.error('函数执行报错');
+      }
+    } else if (_resolve) {
+      _resolve(ctx);
     }
+  });
+  if (!pending) {
+    timerFunc();
+    pending = true;
+  }
+  if (!cb && typeof Promise !== undefined) {
+    return new Promise((resolve, reject) => {
+      _resolve = resolve;
+    });
   }
 }
 
@@ -34,6 +53,6 @@ function flushCallbacks() {
   for (let i = 0; i < copy.length; i++) {
     copy[i]();
   }
-  callbacks = [];
+  callbacks.length = 0;
   pending = false;
 }
