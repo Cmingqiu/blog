@@ -1,13 +1,3 @@
----
-sidebar: auto
-sidebarDepth: 1
-title: vue2.x | vue3.x源码剖析
----
-
-## vue2.x
-
-### DOM Diff
-
 由于在浏览器中操作 DOM 是很昂贵的。频繁的操作 DOM，会产生一定的性能问题。这就是虚拟 Dom 的产生原因。Vue2 的 Virtual DOM 借鉴了开源库 snabbdom 的实现。Virtual DOM 本质就是用一个原生的 JS 对象去描述一个 DOM 节点。是对真实 DOM 的一层抽象。(也就是源码中的 VNode 类，它定义在 `src/core/vdom/vnode.js` 中。)
 VirtualDOM 映射到真实 DOM 要经历 VNode 的 create、diff、patch 等阶段。  
 虚拟 DOM 的好处：1. 具有缓存作用，性能优化；2. 跨平台  
@@ -48,25 +38,3 @@ diff 情况大致分为以下几种：
    当以上 4 中情况都不满足，则开始乱序比对。根据**旧节点**生成映射表，遍历新节点，在映射表中查找：  
    如果没找到，则将新节点插到旧节点头部指针的前面，同时新节点头部指针往后移一位；  
    如果找到表示可以复用该节点（patchVnode），移动该老节点到头部指针的前面，新节点的头部指针都往后移一位，同时老节点置为 null。直到新节点循环完毕，此时移除老节点头部指针和尾部指针中间的所有节点。
-
-## vue3.x
-
-### reactive
-
-### effect
-
-### ref
-
-### toRef
-
-### toRefs
-
-### watch
-
-### watchEffect
-
-### computed
-
-#### runtime-dom
-
-#### runtime-core

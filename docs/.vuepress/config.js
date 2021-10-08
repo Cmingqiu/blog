@@ -36,8 +36,8 @@ module.exports = {
         link: 'https://cmingqiu.github.io/webpack/start/',
         target: '_self'
       },
-      { text: 'Node', link: '/node/', target: '_self' },
-      { text: 'Vue', link: '/vue/', target: '_self' }
+      { text: 'Node', link: '/node/', target: '_self' }
+      // { text: 'Vue', link: '/vue/', target: '_self' }
       /* {
         text: '语言',
         items: [
@@ -88,6 +88,15 @@ module.exports = {
         ]
       },
       ['vue-router/', '手写vue-router源码'],
+      {
+        title: 'Vue2源码解析',
+        children: [
+          ['vue2/reactive', '响应式'],
+          ['vue2/template-compile', '模板编译'],
+          ['vue2/依赖收集', '依赖收集'],
+          ['vue2/dom-diff', 'dom-diff']
+        ]
+      },
       {
         title: '每日一题',
         sidebarDepth: 0,

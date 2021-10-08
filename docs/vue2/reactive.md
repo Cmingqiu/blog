@@ -1,3 +1,9 @@
+vue2 中响应式处理分对象和数组，针对对象使用 Object.defineProperty 劫持每个属性，增加 getter 和 setter，如果对象属性较多，嵌套较深，需要递归遍历，性能较差。对于数组，因为数组长度成百上千很正常，给每项增加 get 和 set 会影响性能，而且很少通过下标对数组操作，所以重写的 7 个能修改数组的方法(push、unshift、pop、shift、reverse、sort、splice)。
+
+对象处理
+
+```js
+// observer/index.js
 import arrayMethods from './array';
 import Dep from './dep';
 
@@ -71,3 +77,50 @@ export function observe(data) {
   if (data.__ob__) return; //已经观测过就不再处理
   return new Observer(data); //通过instanceOf Observer 可以知道数据是否被观测过
 }
+```
+
+数组处理
+
+```js
+// 函数劫持
+
+const arrayOldPrototype = Array.prototype;
+
+const methods = [
+  'push',
+  'unshift',
+  'pop',
+  'shift',
+  'reverse',
+  'sort',
+  'splice'
+];
+
+let arrayMethods = Object.create(arrayOldPrototype);
+methods.forEach(method => {
+  arrayMethods[method] = function(...args) {
+    //...
+    const result = arrayOldPrototype[method].call(this, ...args);
+    //拦截新增到数组中的数据
+    const ob = this.__ob__;
+    let inserted;
+    switch (method) {
+      case 'push':
+      case 'unshift':
+        inserted = args;
+        break;
+      case 'splice':
+        inserted = args.slice(2); // arr.splice(1,1,'s')
+        break;
+    }
+    ob.dep.notify();
+    //调用observeArray,对数组处理
+    if (inserted) {
+      ob.observeArray(inserted);
+    }
+    return result;
+  };
+});
+
+export default arrayMethods;
+```

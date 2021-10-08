@@ -103,7 +103,8 @@ class Promise {
     }
     if (this.status === REJECTED) {
       onRejected(this.reason);
-    }if (this.status === PENDING) {
+    }
+    if (this.status === PENDING) {
     this.onFulfilledCallbacks.push(() => {
       onFulfilled(this.value)
     }）
