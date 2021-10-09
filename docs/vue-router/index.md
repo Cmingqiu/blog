@@ -2,8 +2,8 @@
 
 ```
 ├── component
-│ ├── router-link
-│ ├── router-view
+│ ├── router-link.js
+│ ├── router-view.js
 ├── history
 │ ├── base.js
 │ ├── hash.js
@@ -41,15 +41,14 @@ class VueRouter {
   }
   init(vueRoot) {
     // 匹配出跳转后路径对应的组件
-
     const history = this.history;
 
-    const setUpListener = () => {
-      history.setUpListener();
-    };
     //页面初始化跳转一次
-    history.transitionTo(history.getLocation(), setUpListener);
+    history.transitionTo(history.getLocation(), () => {
+      history.setUpListener();
+    });
 
+    //如果current发生变化，就重新给$route(_route)赋值
     history.listen(route => {
       vueRoot._route = route;
     });
@@ -57,10 +56,14 @@ class VueRouter {
   //路由跳转
   push(path) {
     this.history.transitionTo(path, () => {
-      this.history.pushState(path);
+      this.history.push(path);
     });
   }
-  replace() {}
+  replace(path) {
+    this.history.transitionTo(path, () => {
+      this.history.replace(path);
+    });
+  }
 }
 
 VueRouter.install = install;
@@ -74,7 +77,8 @@ export default VueRouter;
 import RouterLink from './components/link';
 import RouterView from './components/view';
 
-export let Vue;
+export let Vue; //暴露Vue，保证Vue版本一致
+
 /* 初始化$router $route  router-link router-view  */
 export function install(_Vue) {
   if (install.installed) return;
@@ -85,7 +89,7 @@ export function install(_Vue) {
     beforeCreate() {
       if (this.$options.router) {
         //根实例
-        //给根实例添加2个属性,调用VueRouter的init
+        //给根实例添加2个属性,调用VueRouter的init，让每个子组件都能拿到_routerRoot和_routerRoot._router
         this._router = this.$options.router;
         this._routerRoot = this;
 
@@ -98,11 +102,13 @@ export function install(_Vue) {
     }
   });
 
+  // $router 路由实例
   Object.defineProperty(Vue.prototype, '$router', {
     get() {
       return this._routerRoot._router;
     }
   });
+  // $route 当前匹配到的路由记录 {path , matched:[] , params,query,...}
   Object.defineProperty(Vue.prototype, '$route', {
     get() {
       return this._routerRoot._route;
@@ -124,26 +130,42 @@ if (window && window.vue) {
 import createRouteMap from './create-route-map';
 
 export default function createMatcher(routes) {
-  //   / hoime
-  //   /about   about
-  //  /about/a  aboutA
-  //  /about/b  aboutB
-  //创建路径和记录的映射表
-  let { pathMap } = createRouteMap(routes);
+  //   / home
+  //   /about    about
+  //   /about/a  aboutA
+  //   /about/b  aboutB
+  let { pathMap } = createRouteMap(routes); // 创建一个 路径和记录的映射表
 
-  function match(path) {
-    let record = pathMap[path];
-    if (record) {
-    }
-    return pathMap[path];
-  }
-
+  // 在原来的基础上继续添加路由
   function addRoutes(routes) {
     createRouteMap(routes, pathMap);
   }
 
-  return { match, addRoutes };
+  function match(path) {
+    const record = pathMap[path];
+    return createRoute(record, { path });
+  }
+
+  return {
+    match,
+    addRoute: addRoutes,
+    addRoutes //已废弃，使用router.addRoute
+  };
 }
+
+export const createRoute = (record, { path }) => {
+  let matched = [];
+  if (record) {
+    while (record) {
+      matched.unshift(record);
+      record = record.parent; // 一层层的向上找
+    }
+  }
+  return {
+    path,
+    matched
+  };
+};
 ```
 
 ## createRouteMap.js
@@ -175,42 +197,32 @@ function addRouteRecord(route, pathMap, parent) {
 ## base.js
 
 ```js
+import { createRoute } from '../create-matcher';
+
 export default class History {
   constructor(vueRouter) {
     this.router = vueRouter;
+    //将current属性变成响应式的，如果在渲染router-view时候用到了这个current,等会current变化了就可以重新刷新视图
     this.current = createRoute(null, { path: '/' });
   }
-  transitionTo(path, cb) {
-    //根据路径匹配组件及父组件s
+  transitionTo(path, callback) {
+    //根据路径匹配组件及父组件
     let record = this.router.match(path);
-    let currentRoute = createRoute(record, { path });
+    // hash模式下会走2次，因为调用transitionTo之后改变hash,监听hash变化又走了1次。所以加个判断，相同路径不再跳转
     if (
       path === this.current.path &&
-      currentRoute.matched.length === this.current.matched.length
-    )
+      record.matched.length === this.current.matched.length
+    ) {
       return;
+    }
 
-    this.current = currentRoute;
-    this.cb && this.cb(currentRoute);
-    cb && cb();
+    this.current = record; //改变current
+    this.cb && this.cb(this.current); //还有改变_route,使视图更新
+    callback && callback();
   }
   listen(cb) {
     this.cb = cb;
   }
-}
-
-function createRoute(record, location) {
-  let matched = [];
-  if (record) {
-    while (record) {
-      matched.unshift(record);
-      record = record.parent;
-    }
-  }
-  return {
-    ...location,
-    matched
-  };
 }
 ```
 
@@ -226,7 +238,6 @@ function getHash() {
 export default class HashHistory extends History {
   constructor(vueRouter) {
     super(vueRouter);
-
     //初始化检测hash值 给出默认路径
     if (!window.location.hash) window.location.hash = '/';
   }
@@ -240,13 +251,23 @@ export default class HashHistory extends History {
     });
   }
   //改变路径
-  pushState(hash) {
+  push(hash) {
     window.location.hash = hash;
+  }
+  replace(hash) {
+    function getUrl(path) {
+      const href = window.location.href;
+      const i = href.indexOf('#');
+      const base = i >= 0 ? href.slice(0, i) : href;
+      return `${base}#${path}`;
+    }
+
+    window.location.replace(getUrl(hash));
   }
 }
 ```
 
-## history.js
+## html5.js
 
 ```js
 import History from './base';
@@ -255,20 +276,21 @@ export default class HTML5History extends History {
   constructor(router) {
     super(router);
   }
-
   getLocation() {
     return window.location.pathname;
   }
-
-  setUpListener(path) {
+  setUpListener() {
     window.addEventListener('popstate', () => {
       //hash变化 组件渲染
       this.transitionTo(this.getLocation());
     });
   }
   //改变路径
-  pushState(path) {
+  push(path) {
     window.history.pushState({}, null, path);
+  }
+  replace(path) {
+    window.history.replaceState({}, null, path);
   }
 }
 ```
@@ -279,12 +301,20 @@ export default class HTML5History extends History {
 export default {
   functional: true,
   props: {
-    to: String,
-    required: true
+    to: {
+      type: String,
+      required: true
+    },
+    replace: {
+      type: Boolean,
+      required: false
+    }
   },
   render(h, { props, slots, parent }) {
     function click() {
-      parent.$router.push(props.to);
+      props.replace
+        ? parent.$router.replace(props.to)
+        : parent.$router.push(props.to);
     }
     return <a onClick={click}>{slots().default}</a>;
   }
@@ -296,8 +326,9 @@ export default {
 ```js
 export default {
   functional: true,
-  render(h, { parent, data }) {
-    let route = parent.$route;
+  render(h, { parent, data, props, children }) {
+    data.routerView = true; // 标识
+    let route = parent.$route; // $route === _route === current
     let depth = 0;
     while (parent) {
       if (parent.$vnode && parent.$vnode.data.routerView) {
@@ -310,8 +341,6 @@ export default {
     if (!record) {
       return h();
     }
-
-    data.routerView = true;
     return h(record.component, data);
   }
 };
