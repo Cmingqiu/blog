@@ -1,3 +1,5 @@
+import { nextTick } from '../utils/next-tick';
+
 let queue = [];
 let watcherIds = new Set();
 let isPending = false; //异步锁 只开一次异步任务
@@ -10,7 +12,7 @@ export function queueWatcher(watcher) {
       //不兼容再采用MutationObserve,
       //不兼容再采用setImmediate(IE中性能好),
       //不兼容最后采用setTimeOut
-      Promise.resolve().then(flushSchedulerQueue);
+      nextTick(flushSchedulerQueue);
       isPending = true;
     }
   }
