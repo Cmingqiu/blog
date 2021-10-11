@@ -98,6 +98,10 @@ module.exports = {
         ]
       },
       {
+        title: '手写Vue3源码',
+        children: [['vue3/reactivity', 'reactivity']]
+      },
+      {
         title: '每日一题',
         sidebarDepth: 0,
         children: [

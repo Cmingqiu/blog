@@ -34,8 +34,8 @@ export const shallowReadonlyHandlers = extend(
 );
 
 //创建get
-function createGetter (isReadonly = false, isShallow = false) {
-  return function get (target, key, receiver) {
+function createGetter(isReadonly = false, isShallow = false) {
+  return function get(target, key, receiver) {
     const res = Reflect.get(target, key);
     if (!isReadonly) {
       /* console.log(`依赖收集，当前属性${key}`);
@@ -53,8 +53,8 @@ function createGetter (isReadonly = false, isShallow = false) {
 }
 
 //创建set
-function createSetter (isShallow = false) {
-  return function set (target, key, newValue, receiver) {
+function createSetter(isShallow = false) {
+  return function set(target, key, newValue, receiver) {
     const oldValue = target[key];
     //区分新增和修改动作
     //对象：有oldValue就是修改，没有就是新增
@@ -66,12 +66,12 @@ function createSetter (isShallow = false) {
 
     const res = Reflect.set(target, key, newValue); //下面要拿到最新值
 
-    //解决数组新增项触发2次问题：push到数组还会触发length
+    //解决数组新增push项触发2次问题：push到数组还会触发length
     if (!hadKey) {
-      // console.log('新增');
+      //新增
       trigger(target, 'add', key, newValue, oldValue);
     } else if (hasChanged(newValue, oldValue)) {
-      // console.log('修改');
+      // 修改
       trigger(target, 'edit', key, newValue, oldValue);
     }
 

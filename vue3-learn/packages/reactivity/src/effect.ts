@@ -76,7 +76,7 @@ let targetMap = new WeakMap();
  * @param key
  */
 export function track(target, type, key) {
-  if (!activeEffect) return; //不用收集依赖
+  if (!activeEffect) return; // 没有activeEffect说明不是在effect中取值，不用收集依赖
 
   let depsMap = targetMap.get(target);
   if (!depsMap) targetMap.set(target, (depsMap = new Map()));
