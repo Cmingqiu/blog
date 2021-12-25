@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 module.exports = {
   base: '/blog/',
   dest: 'dist',
@@ -76,7 +76,8 @@ module.exports = {
         title: 'CSS',
         children: [
           ['CSS/multi-line-ellipsis', '多行文本显示省略号'],
-          ['CSS/layout', '布局']
+          ['CSS/layout', '布局'],
+          ['CSS/utils', '技巧']
         ]
       },
       {
@@ -121,7 +122,8 @@ module.exports = {
           ['dailyQuestion/5.防抖和节流', '5.防抖和节流'],
           ['dailyQuestion/6.Object.create实现原理', '6.Object.create实现原理']
         ]
-      }
+      },
+      ['utils', 'utils工具方法']
     ]
   },
   configureWebpack: {
@@ -131,4 +133,4 @@ module.exports = {
       }
     }
   }
-};
+}
