@@ -418,3 +418,41 @@ console.log(add(1, 2)(3, 4)(5)(6)()().toString())
   })
 })
 ```
+
+## url 添加参数
+
+```js
+/*
+url:路径地址 
+paramName：参数名 
+replaceWith：参数值
+*/
+function addOrgToUrl(url, paramName, replaceWith) {
+  if (url.indexOf(paramName) > -1) {
+    var re = eval('/(' + paramName + '=)([^&]*)/gi')
+    url = url.replace(re, paramName + '=' + replaceWith)
+  } else {
+    var paraStr = paramName + '=' + replaceWith
+    var idx = url.indexOf('?')
+    if (idx < 0) {
+      url += '?'
+    } else if (idx >= 0 && idx != url.length - 1) {
+      url += '&'
+    }
+    url = url + paraStr
+  }
+  return url
+}
+```
+
+usage
+
+```js
+//转换跳转直播的url
+let str1 = this.addOrgToUrl(url, 'u_code', this.getLoginAfterData.id)
+let str2 = this.addOrgToUrl(
+  str1,
+  'authRight',
+  localStorage.getItem('meetingManager_authRight')
+)
+```
