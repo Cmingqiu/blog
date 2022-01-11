@@ -69,7 +69,8 @@ module.exports = {
           ['JS/prototype', '原型及原型链'],
           ['JS/browser-render-flow', '浏览器渲染流程'],
           ['JS/array-uniq-sort', '数组去重和排序'],
-          ['JS/promise', 'promise']
+          ['JS/promise', 'promise'],
+          ['JS/jsonp', 'jsonp封装']
         ]
       },
       {
@@ -77,7 +78,8 @@ module.exports = {
         children: [
           ['CSS/multi-line-ellipsis', '多行文本显示省略号'],
           ['CSS/layout', '布局'],
-          ['CSS/utils', '技巧']
+          ['CSS/utils', '技巧'],
+          ['CSS/random', 'scss实现星空背景图']
         ]
       },
       {
