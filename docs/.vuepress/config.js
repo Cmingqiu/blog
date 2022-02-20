@@ -125,7 +125,16 @@ module.exports = {
           ['dailyQuestion/6.Object.create实现原理', '6.Object.create实现原理']
         ]
       },
-      ['utils', 'utils工具方法']
+      ['utils', 'utils工具方法'],
+      {
+        title: '工程化配置',
+        // collapsable: false,
+        children: [
+          ['jiagou/git-hooks', 'git hooks'],
+          ['jiagou/eslint', 'eslint'],
+          ['jiagou/prettier', 'prettier']
+        ]
+      }
     ]
   },
   configureWebpack: {
