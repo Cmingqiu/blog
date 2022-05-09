@@ -122,7 +122,8 @@ module.exports = {
             '4.一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？'
           ],
           ['dailyQuestion/5.防抖和节流', '5.防抖和节流'],
-          ['dailyQuestion/6.Object.create实现原理', '6.Object.create实现原理']
+          ['dailyQuestion/6.Object.create实现原理', '6.Object.create实现原理'],
+          ['dailyQuestion/7.typing', '7.打字机效果']
         ]
       },
       ['utils', 'utils工具方法'],
