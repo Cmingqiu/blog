@@ -8,15 +8,7 @@
 cnpm i husky @commitlint/config-conventional @commitlint/cli -D
 ```
 
-### 2.新建 commitlint 配置文件
-
-新建 commitlint.config.js 配置文件,输入：
-
-```js
-module.exports = { extends: ['@commitlint/config-conventional'] }
-```
-
-### 3.husky 初始化
+### 2.husky 初始化
 
 激活开启 husky ，执行完会看到根目录下生成.husky 文件夹 ,里面会保存 husky add 增加的 hook 文件
 
@@ -24,24 +16,42 @@ module.exports = { extends: ['@commitlint/config-conventional'] }
 npx husky install
 ```
 
-### 4.新增 hooks 钩子
+### 3.新增 hooks 钩子
 
-用 husky 添加一个 commit-msg hook 代码提交时用来执行 commitlint 命令
-提交操作执行`git commit -m`会触发 husky`commit-msg`钩子，使用`@commitlint/config-conventiona`校验提交信息;
+#### 3-1. 新增钩子 commit-msg
 
-```sh
-npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
+用 husky 添加一个 commit-msg hook，代码提交时用来执行 commitlint 命令。  
+提交操作执行`git commit -m`会触发 husky`commit-msg`钩子，使用`@commitlint/config-conventiona`校验提交信息。
+
+##### 新建 commitlint 配置文件
+
+新建 commitlint.config.js 配置文件,输入：
+
+```js
+module.exports = {
+  extends: ['@commitlint/config-conventional']
+}
 ```
 
-再添加一个 pre-commit hook 代码提交时 用来执行 lint-staged 命令
+##### 新增 hook
+
+```sh
+npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
+```
+
+#### 3-2. 新增钩子 pre-commit
+
+再添加一个 pre-commit hook 代码提交前用来执行`lint-staged`命令。  
+在 commit 前，我们可以执行测试用例、eslint 校验等，只有这些通过了，才允许提交。这也就是在 pre-commit 这个钩子里需要做的事情。
 
 ```sh
 npx husky add .husky/pre-commit 'npx --no-install lint-staged'
 ```
+**只有执行git commit 才能触发pre-commit钩子；如果配置了commitizen，使用`npm run commit`，则不会触发该钩子**
 
-## \* lint-staged
+##### lint-staged
 
-在代码提交之前，进行代码规则检查能够确保进入 git 库的代码都是符合代码规则的。但是整个项目上运行 lint 速度会很慢，lint-staged 能够让 lint 只检测暂存区的文件，所以速度很快。
+在代码提交之前，进行代码规则检查能够确保进入 git 库的代码都是符合代码规则的。但是整个项目上运行 lint 速度会很慢，lint-staged 能够让 lint 只**检测暂存区的文件**，所以速度很快。
 
 ```sh
 cnpm install lint-staged -D
@@ -65,6 +75,10 @@ package.json 中配置：
 git commit 时触发 pre-commit 钩子，运行 lint-staged 命令，对\*.js 执行 eslint 命令。eslint 要提前配置好。
 lint-staged 过滤文件采用 glob 模式。
 
+::: warning 注意
+window 下执行`husky add`可能会报错，可以分成 2 步，先在.husky 目录下新增`hooks，npx husky add .husky/commit-msg`，然后在文件中写入`npx --no-install commitlint --edit $1`
+:::
+
 ## \* 测试校验提交信息
 
 ```sh
@@ -72,7 +86,7 @@ git add .
 git commit -m "测试"
 ```
 
-会发现提交报错，需更改提交信息
+会发现提交报错，需更改提交信息，**注意冒号后面有空格**
 
 ```sh
 git commit -m "feat: 提交"
@@ -88,7 +102,7 @@ git commit -m "feat: 提交"
 npm install --save-dev @commitlint/cz-commitlint commitizen
 ```
 
-### 2. 适配器
+### 2. 适配器(暂时忽略)
 
 commitizen 通常要与适配器一起使用，通俗点来说是需要一个 commit message 模板，目前主流的是符合 Angular 规范的 cz-conventional-changelog。
 
