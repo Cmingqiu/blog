@@ -47,11 +47,16 @@ npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
 ```sh
 npx husky add .husky/pre-commit 'npx --no-install lint-staged'
 ```
-**只有执行git commit 才能触发pre-commit钩子；如果配置了commitizen，使用`npm run commit`，则不会触发该钩子**
+
+**只有执行 git commit 才能触发 pre-commit 钩子；如果配置了 commitizen，使用`npm run commit`，则不会触发该钩子**
 
 ##### lint-staged
 
 在代码提交之前，进行代码规则检查能够确保进入 git 库的代码都是符合代码规则的。但是整个项目上运行 lint 速度会很慢，lint-staged 能够让 lint 只**检测暂存区的文件**，所以速度很快。
+
+**Lint-staged 仅仅是文件过滤器，不会帮你格式化任何东西，所以没有代码规则配置文件，需要自己配置一下，如：`.eslintrc`、`.stylelintrc`等，然后在`package.json`中引入。一个仅仅过滤出 Git 代码暂存区文件(被 committed 的文件)的工具**
+
+安装
 
 ```sh
 cnpm install lint-staged -D
@@ -67,13 +72,26 @@ package.json 中配置：
     }
   },
   "lint-staged": {
-    "*.js": "eslint --fix"
+    "*.js": ["eslint --fix", "git add"]
   }
 }
 ```
 
-git commit 时触发 pre-commit 钩子，运行 lint-staged 命令，对\*.js 执行 eslint 命令。eslint 要提前配置好。
+git commit 时触发 pre-commit 钩子，运行 lint-staged 命令，对`*.js` 执行 eslint 命令。eslint 要提前配置好。我们对于 lint-staged 如上文配置，对本次被 commited 中的所有.js 文件，执行 eslint --fix 命令和 git add,命令，前者的的目的是格式化，后者是对格式化之后的代码重新提交。  
 lint-staged 过滤文件采用 glob 模式。
+
+除了在 `package.json` 中配置，也可以在`.lintstagedrc`、`lint-staged.config.js` 文件中，lint-staged 的常用选项除了 liners 之外，还有 ignore、concurrent 等，具体参考文档：
+
+```js
+{
+  "lint-staged": {
+    "linters": {
+      "*.{js,scss}": ["some command", "git add"]
+    },
+    "ignore": ["**/dist/*.min.js"]
+  }
+}
+```
 
 ::: warning 注意
 window 下执行`husky add`可能会报错，可以分成 2 步，先在.husky 目录下新增`hooks，npx husky add .husky/commit-msg`，然后在文件中写入`npx --no-install commitlint --edit $1`
