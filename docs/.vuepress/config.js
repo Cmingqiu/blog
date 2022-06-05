@@ -133,7 +133,8 @@ module.exports = {
         children: [
           ['jiagou/git-hooks', 'git hooks'],
           ['jiagou/eslint', 'eslint'],
-          ['jiagou/prettier', 'prettier']
+          ['jiagou/prettier', 'prettier'],
+          ['jiagou/editor-config', 'editor-config']
         ]
       }
     ]
