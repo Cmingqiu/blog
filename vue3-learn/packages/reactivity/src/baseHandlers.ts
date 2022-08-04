@@ -22,6 +22,10 @@ const readonlySet = {
   }
 };
 
+export const enum ReactiveFlags {
+  IS_REACTIVE = '__v_is_Reactive'
+}
+
 export const mutableHandlers = { get, set };
 
 export const shallowReactiveHandlers = { get: shallowGet, set: shallowSet };
@@ -36,7 +40,8 @@ export const shallowReadonlyHandlers = extend(
 //创建get
 function createGetter(isReadonly = false, isShallow = false) {
   return function get(target, key, receiver) {
-    const res = Reflect.get(target, key);
+    const res = Reflect.get(target, key, receiver);
+    if (key === ReactiveFlags.IS_REACTIVE) return !isReadonly;
     if (!isReadonly) {
       /* console.log(`依赖收集，当前属性${key}`);
       console.log('activeEffect', activeEffect, activeEffect.id); */
@@ -64,14 +69,14 @@ function createSetter(isShallow = false) {
         ? Number(key) < target.length
         : hasOwn(target, key);
 
-    const res = Reflect.set(target, key, newValue); //下面要拿到最新值
+    const res = Reflect.set(target, key, newValue, receiver); //下面要拿到最新值
 
     //解决数组新增push项触发2次问题：push到数组还会触发length
     if (!hadKey) {
       //新增
       trigger(target, 'add', key, newValue, oldValue);
     } else if (hasChanged(newValue, oldValue)) {
-      // 修改
+      // 修改且不是新旧值不相等
       trigger(target, 'edit', key, newValue, oldValue);
     }
 

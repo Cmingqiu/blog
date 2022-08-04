@@ -1,6 +1,7 @@
 import { isObject } from '@vue/shared';
 import {
   mutableHandlers,
+  ReactiveFlags,
   readonlyHandlers,
   shallowReactiveHandlers,
   shallowReadonlyHandlers
@@ -33,6 +34,7 @@ const readonlyMap = new WeakMap();
  */
 function createReactiveObject(target, isReadonly = false, baseHandlers) {
   if (!isObject(target)) return target;
+  if (target[ReactiveFlags.IS_REACTIVE]) return target;
   const proxyMap = isReadonly ? readonlyMap : reactiveMap;
   const existMap = proxyMap.get(target);
   if (existMap) return existMap;

@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 module.exports = {
   base: '/blog/',
   dest: 'dist',
@@ -146,4 +146,12 @@ module.exports = {
       }
     }
   }
-}
+  /*  scss: {
+     includePaths: ["./styles/index.scss"]
+   }, 
+  chainWebpack: (config, isServer) => {
+    config.resolveLoader
+      .modules
+      .add(path.resolve(__dirname, './node_modules'))
+  } */
+};
