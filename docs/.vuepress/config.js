@@ -134,7 +134,8 @@ module.exports = {
           ['jiagou/git-hooks', 'git hooks'],
           ['jiagou/eslint', 'eslint'],
           ['jiagou/prettier', 'prettier'],
-          ['jiagou/editor-config', 'editor-config']
+          ['jiagou/editor-config', 'editor-config'],
+          ['jiagou/eslint-prettier-ts', 'eslint-prettier-ts']
         ]
       }
     ]

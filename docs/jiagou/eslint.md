@@ -16,7 +16,7 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es2020: true,
+    es2022: true,
     node: true
   },
   // globals: {
@@ -45,7 +45,7 @@ module.exports = {
     // "quotes": ["error", "double"]
     // 'prettier/prettier': 'error'
   }
-}
+};
 ```
 
 忽略文件.eslintignore
@@ -100,6 +100,25 @@ dist
 # eslint-config-airbnb-base 使用 airbnb 代码规范
 npm i eslint babel-eslint eslint-config-airbnb-base eslint-plugin-import -D
 ```
+
+## ts 结合 eslint
+
+```sh
+npm install -D @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint typescript
+```
+
+```.eslintrc.js
+module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint']
+};
+```
+
+::: tip
+@typescript-eslint/parser 和 @typescript-eslint/eslint-plugin 版本号必须一致
+:::
 
 ## 配置解读
 
@@ -247,7 +266,7 @@ ESLint 相关的插件的命名形式有 2 种：不带命名空间的和带命�
     'jquery', // 是指 eslint-plugin-jquery
     '@jquery/jquery', // 是指 @jquery/eslint-plugin-jquery
     '@foobar' // 是指 @foobar/eslint-plugin
-  ]
+  ];
 }
 ```
 
@@ -365,7 +384,7 @@ overrides: [
       ecmaVersion: 5
     }
   }
-]
+];
 ```
 
 以上配置来自 [webpack .eslintrc.js](https://github.com/webpack/webpack/blob/master/.eslintrc.js 'https://github.com/webpack/webpack/blob/master/.eslintrc.js')
@@ -425,7 +444,7 @@ rules 列表项中标识了一个扳手 🔧 图案的规则就标识该规则�
 对于如下的 a.js 代码：
 
 ```js
-const num = 12
+const num = 12;
 ```
 
 当在配置文件配置了 'semi': \[2, 'always'\] 后，运行命令：
@@ -525,7 +544,7 @@ vue-cli-service lint [options] [...files]
 ```js
 module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development'
-}
+};
 ```
 
 lintOnSave 参数说明：
@@ -620,7 +639,7 @@ eslint-plugin-vue 是对 .vue 文件进行代码校验的插件。
 module.exports = {
   root: true,
   extends: ['standard']
-}
+};
 ```
 
 - 配置了 standard 后，还能自定义 rules 吗？  

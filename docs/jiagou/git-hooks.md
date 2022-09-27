@@ -11,10 +11,24 @@ cnpm i husky @commitlint/config-conventional @commitlint/cli -D
 ### 2.husky 初始化
 
 激活开启 husky ，执行完会看到根目录下生成.husky 文件夹 ,里面会保存 husky add 增加的 hook 文件
+方式一
+
+```sh
+npm set-script prepare "husky install"
+
+然后执行
+npm run prepare
+```
+
+方式二
 
 ```sh
 npx husky install
 ```
+
+::: tip
+会在.git/config 中的[core]添加 hooksPath = .husky 表示钩子执行路径
+:::
 
 ### 3.新增 hooks 钩子
 
@@ -30,14 +44,19 @@ npx husky install
 ```js
 module.exports = {
   extends: ['@commitlint/config-conventional']
-}
+};
 ```
 
 ##### 新增 hook
 
 ```sh
-npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
+#使用执行 lint-statged 使用本地资源 不下载
+npx husky add .husky/commit-msg "npx --no-install commitlint --edit $1"
 ```
+
+::: warning 注意
+这里必须使用双引号才能创建成功
+:::
 
 #### 3-2. 新增钩子 pre-commit
 
@@ -45,7 +64,7 @@ npx husky add .husky/commit-msg 'npx --no-install commitlint --edit $1'
 在 commit 前，我们可以执行测试用例、eslint 校验等，只有这些通过了，才允许提交。这也就是在 pre-commit 这个钩子里需要做的事情。
 
 ```sh
-npx husky add .husky/pre-commit 'npx --no-install lint-staged'
+npx husky add .husky/pre-commit "npx --no-install lint-staged"
 ```
 
 **只有执行 git commit 才能触发 pre-commit 钩子；如果配置了 commitizen，使用`npm run commit`，则不会触发该钩子**
@@ -75,6 +94,11 @@ package.json 中配置：
     "*.js": ["eslint --fix", "git add"]
   }
 }
+// 或者
+"lint-staged":{
+  "*.{js,ts,vue,jsx,tsx}": ["npm run eslint"],
+  "*.{js,jsx,ts,tsx,md,html,css,lees,scss,sass}": "prettier --write",
+}
 ```
 
 git commit 时触发 pre-commit 钩子，运行 lint-staged 命令，对`*.js` 执行 eslint 命令。eslint 要提前配置好。我们对于 lint-staged 如上文配置，对本次被 commited 中的所有.js 文件，执行 eslint --fix 命令和 git add,命令，前者的的目的是格式化，后者是对格式化之后的代码重新提交。  
@@ -86,7 +110,7 @@ lint-staged 过滤文件采用 glob 模式。
 {
   "lint-staged": {
     "linters": {
-      "*.{js,scss}": ["some command", "git add"]
+      "src/**/*.{js,scss}": ["some command", "git add"]
     },
     "ignore": ["**/dist/*.min.js"]
   }
@@ -188,5 +212,140 @@ module.exports = {
       }
     }
   }
-}
+};
+```
+
+demo
+
+```js
+module.exports = {
+  extends: ['@commitlint/config-angular'],
+  parserPreset: {
+    parserOpts: {
+      headerPattern: /^(.*?)(?:\\((.*)\\))?:?\\s(.*)$/,
+      headerCorrespondence: ['type', 'scope', 'subject']
+    }
+  },
+  rules: {
+    'type-case': [0],
+    'type-empty': [2, 'never'],
+    'type-enum': [
+      2,
+      'always',
+      [
+        '📦build',
+        '👷ci',
+        '📝docs',
+        '🌟feat',
+        '🐛fix',
+        '🚀perf',
+        '🌠refactor',
+        '🔂revert',
+        '💎style',
+        '🚨test'
+      ]
+    ],
+    'scope-empty': [2, 'never'],
+    'subject-empty': [2, 'never']
+  },
+  prompt: {
+    settings: {},
+    skip: ['body', 'footer', 'issues'],
+    messages: {
+      skip: '回车直接跳过',
+      max: '最大%d字符',
+      min: '%d chars at least',
+      emptyWarning: '内容不能为空，重新输入',
+      upperLimitWarning: 'over limit',
+      lowerLimitWarning: 'below limit'
+    },
+    questions: {
+      type: {
+        description: '请选择提交类型',
+        enum: {
+          '🌟feat': {
+            description: '增加新功能',
+            title: 'Features',
+            emoji: '🌟'
+          },
+          '🐛fix': {
+            description: '修复bug',
+            title: 'Bug Fixes',
+            emoji: '🐛'
+          },
+          '📝docs': {
+            description: '修改文档',
+            title: 'Documentation',
+            emoji: '📝'
+          },
+          '💎style': {
+            description: '样式修改不影响逻辑',
+            title: 'Styles',
+            emoji: '💎'
+          },
+          '🌠refactor': {
+            description: '功能/代码重构',
+            title: 'Code Refactoring',
+            emoji: '🌠'
+          },
+          '🚀perf': {
+            description: '性能优化',
+            title: 'Performance Improvements',
+            emoji: '🚀'
+          },
+          '🚨test': {
+            description: '增删测试',
+            title: 'Tests',
+            emoji: '🚨'
+          },
+          '📦build': {
+            description: '打包',
+            title: '打包',
+            emoji: '📦'
+          },
+          '👷ci': {
+            description: 'CI部署',
+            title: 'Continuous Integrations',
+            emoji: '⚙️'
+          },
+
+          '🔂revert': {
+            description: '版本回退',
+            title: 'Reverts',
+            emoji: '🔂'
+          }
+        }
+      },
+      scope: {
+        description: '请输入修改的范围（必填）'
+      },
+      subject: {
+        description: '请简要描述提交（必填）'
+      },
+      body: {
+        description: '请输入详细描述（可选）'
+      },
+      isBreaking: {
+        description: '有什么突破性的变化吗?'
+      },
+      breakingBody: {
+        description:
+          '一个破坏性的变更提交需要一个主体。 请输入提交本身的更长的描述  '
+      },
+      breaking: {
+        description: 'Describe the breaking changes'
+      },
+      isIssueAffected: {
+        description: '是否有未解决的问题?'
+      },
+      issuesBody: {
+        description:
+          'If issues are closed, the commit requires a body. Please enter a longer description of the commit itself'
+      },
+      issues: {
+        description: '请输入问题说明'
+      }
+    }
+  }
+};
 ```
