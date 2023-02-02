@@ -29,6 +29,7 @@ class Watcher {
     Dep.target = null;
     return value;
   }
+  // 触发更新，进入属性的setter，调用dep.notify()通知依赖更新，调用此方法
   update() {
     queueWatcher(this);
   }
@@ -50,3 +51,15 @@ class Watcher {
 }
 
 export default Watcher;
+
+
+/* 
+流程：
+前提： 执行defineReactive的时候，给每个属性绑定了一个dep，这个dep用来存放watcher的
+
+1.默认会先实例化1个渲染watcher，初始化watcher的时候会更新视图
+2.在更新视图之前，先将当前watcher放在全局上
+3.执行渲染函数的时候会进行取值，进入属性的getter中
+4.在getter中会将当前watcher存入属性对应的dep中
+5.后续属性发生变化，进入setter，执行dep.notify()通知dep中的watcher更新
+*/

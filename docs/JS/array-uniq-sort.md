@@ -24,7 +24,7 @@ function uniq2(arr) {
 function uniq3(arr) {
   if (!Array.isArray(arr)) return arr;
   let newArr = [arr[0]];
-  for (let i = 0, len = arr.length; i < len; i++) {
+  for (let i = 1, len = arr.length; i < len; i++) {
     //判读 arr[i]不存在 newArr 中
 
     /* 方法一
@@ -137,7 +137,8 @@ function uniq8(arr) {
 ```js
 function quickSort(arr) {
   if (!Array.isArray(arr) || arr.length <= 1) return arr;
-  let left = [], right = [];
+  let left = [],
+    right = [];
   const middleValue = arr.splice(Math.round(arr.length / 2), 1)[0];
   for (let i = 0; i < arr.length; i++) {
     //升序

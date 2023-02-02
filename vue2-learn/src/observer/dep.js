@@ -1,6 +1,6 @@
 /** 依赖管理器dep
  * 每个属性，每个对象(数组)都有dep实例，用来收集watcher
- * 每个watcher都会收集dep，所以dep和watcher是多对多的关系；一个属性用在多个组件中，一个组件有多个属性
+ * 每个watcher都会收集dep，所以dep和watcher是多对多的关系；一个属性(dep)用在多个组件中(watcher)，一个组件(watcher)有多个属性(dep)
  */
 let id = 0;
 

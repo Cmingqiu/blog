@@ -24,6 +24,7 @@ if (typeof Promise !== 'undefined') {
   };
 }
 
+// 内部会调用nextTick，用户也会调用，放进队列callbacks中，批量执行
 export function nextTick(cb, ctx) {
   let _resolve;
   callbacks.push(() => {
@@ -37,7 +38,7 @@ export function nextTick(cb, ctx) {
       _resolve(ctx);
     }
   });
-  if (!pending) {
+  if (!pending) {  // 异步锁 是为了只开1个异步方法
     timerFunc();
     pending = true;
   }
