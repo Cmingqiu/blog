@@ -505,3 +505,60 @@ window.location.href = changeURLArg(window.location.href, 'name', 'xxx');
 ```
 
 :::
+
+## 异步函数组合
+
+```typescript
+type PromiseFunctionType = (val?: any) => Promise<any>;
+/**
+ * 将1个promise函数或多个promise函数组成的数组包装成一个函数，按顺序执行
+ * @param {Function | Array} promiseArrOrFunc
+ * @return { Function }
+ */
+function flattenPromisesArray(
+  promiseArrOrFunc: PromiseFunctionType | PromiseFunctionType[]
+) {
+  const fns: PromiseFunctionType[] = Array.isArray(promiseArrOrFunc)
+    ? promiseArrOrFunc
+    : [promiseArrOrFunc];
+  return function(props: any) {
+    return Promise.all(
+      fns.reduce((p, fn) => p.then(() => fn(props)), Promise.resolve())
+    );
+  };
+}
+
+// 用例
+// 可能是数组，也可能是函数
+const arrOrFunction = [
+  async (x: any) => {
+    console.log('1', x);
+    await sleep();
+    console.log('1-1');
+  },
+  async (y: any) => {
+    console.log('2', y);
+    await sleep();
+    console.log('2-1');
+  }
+];
+function sleep(time = 1000) {
+  return new Promise(resolve => {
+    setTimeout(resolve, time);
+  });
+}
+flattenPromisesArray(arrOrFunction)('xx');
+```
+
+```js
+/**
+ * 异步串行调用
+ * 思考：上一个promise的结果作为为参数传到下一个promise？
+ */
+function promiseSeries(promises) {
+  return promises.reduce(
+    (memo, cur) => memo.then(() => cur()),
+    Promise.resolve()
+  );
+}
+```

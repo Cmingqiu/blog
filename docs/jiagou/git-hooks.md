@@ -96,10 +96,19 @@ package.json 中配置：
 }
 // 或者
 "lint-staged":{
-  "*.{js,ts,vue,jsx,tsx}": ["npm run eslint"],
+  "*.{js,ts,vue,jsx,tsx}": ["eslint --fix"],
   "*.{js,jsx,ts,tsx,md,html,css,lees,scss,sass}": "prettier --write",
 }
 ```
+
+会在本地 commit 之前，校验提交的内容是否符合本地配置的 eslint 规则，校验会出现两种结果：
+
+1. 如果符合规则：提交成功
+2. 如果不符合规则：自动执行 eslint --fix 尝试自动修复，如果修复成功会提交代码；如果失败，会提示错误，在你修复这个错误之后才能提交代码
+
+::: warning 注意
+测试`lint-staged`提交时使用`eslint --fix` 自动修复，如果只是一些空格符，空行的修改，会提交一个空 commit，pre-commit 会阻止提交。可以使用`lint-staged --allow-empty`允许提交空信息
+:::
 
 git commit 时触发 pre-commit 钩子，运行 lint-staged 命令，对`*.js` 执行 eslint 命令。eslint 要提前配置好。我们对于 lint-staged 如上文配置，对本次被 commited 中的所有.js 文件，执行 eslint --fix 命令和 git add,命令，前者的的目的是格式化，后者是对格式化之后的代码重新提交。  
 lint-staged 过滤文件采用 glob 模式。

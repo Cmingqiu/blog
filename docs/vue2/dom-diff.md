@@ -15,20 +15,24 @@ Vue 的 diff 算法是平级比较，不考虑跨级比较的情况。内部采�
 diff 情况大致分为以下几种：
 
 1. **老头和新头复用**
-   ![1.head-to-head](@public/img/dom-diff/1.head-to-head.jpg)  
+   ![1.head-to-head](@public/img/dom-diff/1.head-to-head.jpg)
+
    当老头和新头是相同节点时，复用老节点，并且更新老节点的属性和 children(patchVnode)，老节点头部指针和新节点头部指针往后移动一位(index++)，直到超出新老节点长度，此时如果新节点队列还有节点，根据新节点尾指针下一个节点是否存在判断向老节点末尾添加还是在老节点开始出插入。  
-   如果老头和新头不同，开始比对老尾和新尾...  
+   如果老头和新头不同，开始比对老尾和新尾...
+
    ![1.head-to-head2](@public/img/dom-diff/1.head-to-head2.jpg)
 
-2. **老尾和新尾复用**
-   ![2.tail-to-tail](@public/img/dom-diff/2.tail-to-tail.jpg)  
+2) **老尾和新尾复用**
+   ![2.tail-to-tail](@public/img/dom-diff/2.tail-to-tail.jpg)
+
    当老尾和新尾是相同节点时，复用老节点，并且更新老节点的属性和 children(patchVnode)，老节点尾部指针和新节点尾部指针往后前移动一位(index--)，直到超出新老节点长度，此时如果新节点队列还有节点，根据新节点尾指针下一个节点是否存在判断向老节点末尾添加还是在老节点开始出插入。  
-   如果老尾和新尾不同，开始比对老头和新尾...  
+   如果老尾和新尾不同，开始比对老头和新尾...
+
    ![2.tail-to-tail2](@public/img/dom-diff/2.tail-to-tail2.jpg)
 
    比对结束后，如果剩下节点是新节点，就按顺序依次的插入老节点头部或尾部，如果剩下的节点是老节点，就删除剩下节点。
 
-3. **老头和新尾复用**  
+3) **老头和新尾复用**  
    ![3.head-to-tail](@public/img/dom-diff/3.head-to-tail.jpg)
 
    ![3.head-to-tail2](@public/img/dom-diff/3.head-to-tail2.png)
@@ -36,7 +40,7 @@ diff 情况大致分为以下几种：
    当老头和新尾是相同节点时，复用老节点，并且更新老节点的属性和 children(patchVnode)，该老节点移动到尾部指针的后面，同时老节点头部指针往后移动一位(index++) ，新节点尾部指针往前移动一位(index--)。直接复用 DOM 节点，优化倒序的节点。  
    如果老头和新尾不同，开始比对老尾和新头...
 
-4. **老尾和新头复用**  
+4) **老尾和新头复用**  
    ![4.tail-to-head](@public/img/dom-diff/4.tail-to-head.jpg)
 
    ![4.tail-to-head2](@public/img/dom-diff/4.tail-to-head2.png)
@@ -44,11 +48,14 @@ diff 情况大致分为以下几种：
    当老尾和新头是相同节点时，复用老节点，并且更新老节点的属性和 children(patchVnode)，该老节点移动到头部指针的前面，同时老节点尾部指针往前移动一位(index--) ，新节点头部指针往后移动一位(index++)。  
    如果老尾和新头不同，开始乱序比对...
 
-5. **乱序比对**  
+5) **乱序比对**  
    当以上 4 中情况都不满足，则开始乱序比对。  
-   图 1  
-   ![5.out-of-order](@public/img/dom-diff/5.out-of-order.png)  
-   图 2  
+   图 1
+
+   ![5.out-of-order](@public/img/dom-diff/5.out-of-order.png)
+
+   图 2
+
    ![5.out-of-order2](@public/img/dom-diff/5.out-of-order2.png)
 
    根据**旧节点**生成映射表，遍历新节点，在映射表中查找：

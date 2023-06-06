@@ -15,10 +15,13 @@
    - 如果返回的是 promise，会等待 promise 执行完成，判断这个 promise 的状态，这个 promise 状态如果是成功就将成功结果传入下一个成功回调，如果是失败结果传入下一个失败的回调
 9. promise 之所以能进行链式调用，并不是在 then 中返回 this，因为状态是无法改变的，不可能上一个是成功状态，下一个走失败状态，所以是因为在 then 中返回了一个新的 promise，才能链式调用，和 jquery 不一样
 10. **Promise 中的值穿透:** then 的参数是可选的，如果不是函数就忽略，向下透传。.then 或者.catch 的参数期望是函数，传入非函数则会发生值穿透。当 then 中传入的不是函数，则这个 then 返回的 promise 的 data，将会保存上一个的 promise.data。这就是发生值穿透的原因。而且每一个无效的 then 所返回的 promise 的状态都为 resolved。  
-如果 then 的参数不是一个函数，就会把上一层传入的值直接传递给下一层 (类似直接 return this)，这就是值穿透现象。
+    如果 then 的参数不是一个函数，就会把上一层传入的值直接传递给下一层 (类似直接 return this)，这就是值穿透现象。
 
 ```js
-Promise.resolve(1).then(2).then(Promise.resolve(3)).then(console.log);
+Promise.resolve(1)
+  .then(2)
+  .then(Promise.resolve(3))
+  .then(console.log);
 // 上面代码的输出是1
 ```
 
@@ -88,6 +91,7 @@ class Promise {
         //保证状态不会再次改变，只能从pending变为其他状态
         this.status = FULFILLED;
         this.value = value;
+        this.onFulfilledCallbacks.forEach(fn => fn());
       }
     };
     const reject = reason => {
@@ -95,6 +99,7 @@ class Promise {
         //保证状态不会再次改变，只能从pending变为其他状态
         this.status = REJECTED;
         this.reason = reason;
+        this.onFulfilledCallbacks.forEach(fn => fn());
       }
     };
 
